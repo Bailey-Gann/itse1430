@@ -42,5 +42,18 @@ namespace Demo
             
 
         }
+
+        //********************************************************************
+        //*********************Function naming rules**************************
+        //********************************************************************
+        //  Functions are actions -> verbs
+        //  Functions are always Pascal cased (PascalCased, not, pascalCased)
+        // Functions should do a single, logical thing
+
+        static void TestFunction()
+        {
+            Console.WriteLine("Success!");
+            //Function Declaration::=  [modifiers] T/void  id  ([parameters])  {S*}
+        }
     }
 }
