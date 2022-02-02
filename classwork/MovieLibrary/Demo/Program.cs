@@ -9,48 +9,86 @@ namespace Demo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main ( string[] args )
+        {
+            //DemoPrimitives();
+
+            //Arithmetic operators
+            int x = 10, y = 20, z;
+
+            z = x + y;
+            z = x - y;
+            z = x * y;
+            z = x / y;
+            z = x % y;
+
+            //x++ prefix increment
+            // temp = x;
+            // x += 1;
+            // temp;
+            x = 10;
+            x++;
+
+            //++x postfix incremnt
+            // x += 1;
+            // x;
+            ++x;
+
+            //x-- prefix decrement
+            // temp = x;
+            // x -= 1;
+            // temp;
+            x = 10;
+            x--;
+
+            //--x postfix decremnt
+            // x -= 1;
+            // x;
+            --x;
+
+
+        }
+
+        static void DemoPrimitives ()
         {
             //Primitives
             //Integrals
             sbyte sbyteValue = 10;
             short shortValue = 20;
-            int intValue = 65_432_198;
-            long longValue = 40L; //'L' is not mandatory. Makes it a long literal opposed to the default int literal
+            int intValue = 62_543;
+            long longValue = 40L;
 
             //Floats
-            float floatValue = 654.113F; //Leave out the 'F' or 'f', recieve an error
-            double doubleValue = 5642.444;
-            decimal payRate = 17.99M; //Leave out the 'm' or 'm', recieve an error
+            float floatValue = 45.6F;
+            double doubleValue = 5678.115;
+            decimal payRate = 17.50M;
 
-            //Boolean
-            bool answer = false;
-            bool otherAnswer = true;
+            bool isSuccessful = true;
+            bool isFailing = false;
 
-            //Char
             char letterGrade = 'A';
+            string name = "Bob";
 
-            //String
-            string name = "Captain Bailey Gann";
+            //Please don't do this
+            int hoursWorked;
+            hoursWorked = 0;
 
-
-            //Other types, Non-Primitive
-            DateTime x; //Date and a time. Same as SQL
-            TimeSpan xy; //Duration, accurate to miliseconds
-            Guid xyz; //Everything is a Guid (Globally Unqiue Identifier) - a string of byte values, 64 bytes (statistically speaking, they are unique)
-
-            
-
+            //Definitely assigned
+            //hoursWorked = 10;
+            intValue = hoursWorked;
         }
+    
 
-        //********************************************************************
-        //*********************Function naming rules**************************
-        //********************************************************************
-        //  Functions are actions -> verbs
-        //  Functions are always Pascal cased (PascalCased, not, pascalCased)
-        // Functions should do a single, logical thing
 
-        static void TestFunction()
+
+//********************************************************************
+//*********************Function naming rules**************************
+//********************************************************************
+//  Functions are actions -> verbs
+//  Functions are always Pascal cased (PascalCased // not pascalCased)
+// Functions should do a single, logical thing
+
+static void TestFunction()
         {
             Console.WriteLine("Success!");
             //Function Declaration::=  [modifiers] T/void  id  ([parameters])  {S*}
