@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Bailey Gann
+ * ITSE 1430
+ * Lab 1
+ */
+
+using System;
 
 namespace CharacterCreator.ConsoleHost
 {
@@ -6,7 +12,7 @@ namespace CharacterCreator.ConsoleHost
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           Console.WriteLine("Bailey Gann \n ITSE 1430 \n 2/2/2022");
         }
     }
 }
