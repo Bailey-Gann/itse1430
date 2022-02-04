@@ -22,6 +22,7 @@ namespace CharacterCreator.ConsoleHost
         static string[] races = { "Vampire", "Human", "Pixie", "Elf", "Phantom", "ERROR" };
         static string[] classes = { "Wizard", "Fighter", "Warlock", "Rogue", "Druid", "ERROR" };
         static string[] attributeNames = { "Strength", "Intelligence", "Constitution", "Dexterity", "Charisma / Magic" };
+        static string[] editArray = { "Name", "Race", "Profession", attributeNames[0], attributeNames[1], attributeNames[2], attributeNames[3], attributeNames[4], "Description" };
         //***************************************************************************************
 
         static char input2;
@@ -93,8 +94,64 @@ namespace CharacterCreator.ConsoleHost
         }
         private static void EditCharacter ()
         {
-            //TODO: Implement Edit Character functionality
+            bool answer;
 
+            
+          if(name != "")
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    answer = Confirm("Would you like to edit your character's : " + editArray[i]);
+                    if (answer == true)
+                    {
+                        if (i == 0)
+                        {
+                            name = GetStringInput_NON_List("Enter a new name: ");
+                        } else if (i ==1)
+                        {
+                            race = GetStringInputList(races, "Input a new race option from the list: ");
+                        } else if (i == 2)
+                        {
+                            profession = GetStringInputList(classes, "Input a new profession from the list : ");
+                        } else if (i == 3)
+                        {
+                            Console.WriteLine("Input value 0 - 100 : ");
+                            attributes[0] = GetNumberValue();
+                        } else if (i == 4)
+                        {
+                            Console.WriteLine("Input value 0 - 100 : ");
+                            attributes[1] = GetNumberValue();
+                        } else if (i == 5)
+                        {
+                            Console.WriteLine("Input value 0 - 100 : ");
+                            attributes[2] = GetNumberValue();
+                        } else if (i == 6)
+                        {
+                            Console.WriteLine("Input value 0 - 100 : ");
+                            attributes[3] = GetNumberValue();
+                        } else if (i == 7)
+                        {
+                            Console.WriteLine("Input value 0 - 100 : ");
+                            attributes[4] = GetNumberValue();
+                        } else if (i == 8)
+                        {
+                            description = GetStringInput_NON_List("Enter a new description (NOTE: This new input will REPLACE any existing data.");
+                        } else
+                        {
+                            break;
+                        }
+
+                    }//end of if statement
+                    else
+                    {
+                        Console.WriteLine("Ok. Moving on...");
+                        //Proceed with the loop
+                    }//end of else statement
+                }//end of for loop
+            } else
+            {
+                Console.WriteLine("No character to edit.\nMoving on...");
+            }
 
             //Last line...
             MenuLoop();
@@ -285,5 +342,5 @@ namespace CharacterCreator.ConsoleHost
 //Story 4: Complete
 //Story 5: Complete
 //Story 6: Complete
-//Story 7: (edit character)
+//Story 7: Complete
 //Story 8: Complete
