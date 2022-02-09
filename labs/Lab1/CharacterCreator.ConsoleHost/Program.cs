@@ -314,21 +314,21 @@ namespace CharacterCreator.ConsoleHost
 
         static bool Confirm(string message )
         {
-            Console.WriteLine(message);
+            Console.Write(message);
             do
             {
-                ConsoleKeyInfo key = Console.ReadKey();
+                ConsoleKeyInfo key = Console.ReadKey(true);
 
                 //TODO: Validate
 
                 if (key.Key == ConsoleKey.Y)
                 {
-                    Console.WriteLine(' ');
+                    Console.WriteLine('Y');
                     return true;
 
                 } else if (key.Key == ConsoleKey.N)
                 {
-                    Console.WriteLine(' ');
+                    Console.WriteLine('N');
                     return false;
                 };
             } while (true);
