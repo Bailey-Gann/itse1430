@@ -13,6 +13,7 @@ namespace MovieLib.ConsoleHost
         //Entry point
         static void Main(string[] args)
         {
+            var done = false;
 
             do
             {
@@ -37,18 +38,50 @@ namespace MovieLib.ConsoleHost
                     case 'Q':
                     {
                         if (ConfirmQuit())
-                            break;
+                            done = true;
                     }; break;
+
+                    case 'd':
+                    case 'D': DeleteMovie(); break;
+
+                    case 'e':
+                    case 'E': EditMovie(); break;
                     default: Console.WriteLine("Unknown option"); break;
                 };
                 
-            } while (true);
+            } while (!done);
             
+        }
+
+        private static void EditMovie ()
+        {
+            Console.WriteLine("Feature not yet supported...");
+            
+        }
+
+        private static void DeleteMovie ()
+        {
+            if (String.IsNullOrEmpty(title))
+            {
+                Console.WriteLine("No movie to delete.");
+                return;
+            }
+
+            //Delete the movie
+            if(ReadBoolean($"Are you sure you want to delete '{title}' (Y/N) "))
+                title = "";
         }
 
         private static void ViewMovie ()
         {
-            //TODO: Does movie exist
+            //Does movie exist
+            if (String.IsNullOrEmpty(title))
+            {
+                Console.WriteLine("No movie to view");
+                return;
+            };
+
+            
             Console.WriteLine(title);
 
             //releaseYear (duration mins) rating
@@ -96,7 +129,12 @@ namespace MovieLib.ConsoleHost
             isColor = ReadBoolean("In color (Y/N)? ");
             description = ReadString("Enter a description (optional): ", false);
         }
-        //Unit 1 only!!
+
+        //*********************************************************
+        //*********************************************************
+        //=====================Unit 1 only=========================
+        //*********************************************************
+        #region Static Data
         static string title;
         static int duration;
         static int releaseYear;
@@ -104,7 +142,11 @@ namespace MovieLib.ConsoleHost
         static string genre;
         static bool isColor;
         static string description;
+        #endregion
+        //*********************************************************
+        //*********************************************************
 
+        #region Helper Functions
         static bool ReadBoolean (string message )
         {
             //TODO: Fix prompt
@@ -161,15 +203,24 @@ namespace MovieLib.ConsoleHost
         {
             Console.WriteLine(message);
 
-            string input = Console.ReadLine();
+            do
+            {
+                string input = Console.ReadLine();
 
-            //TODO: Validate input, if required
-            
-            return input;
+                //Validate input, if required
+                if (!required || !String.IsNullOrEmpty(input))
+                    return input;
+
+                Console.WriteLine("Value is required");
+            } while (true);
         }
+       
 
         static char DisplayMenu ()
         {
+            Console.WriteLine("Movie Library");
+            //Console.WriteLine("-------------");
+            Console.WriteLine("".PadLeft(20, '-'));
             Console.WriteLine(" ");
             Console.WriteLine("A)dd Movie");
             Console.WriteLine("V)iew Movie");
@@ -177,36 +228,34 @@ namespace MovieLib.ConsoleHost
             Console.WriteLine("D)elete Movie");
             Console.WriteLine("Q)uit");
 
-            string input = Console.ReadLine().ToUpper();
-            Console.WriteLine(" ");
-            
-            //Validate input
-            if (input == "A")
+            do
             {
-                return 'A';
-            }
-            else if(input == "V")
-            {
-                return 'V';
-            }
-            else if(input == "E")
-            {
-                return 'E';
-            }
-            else if(input == "D")
-            {
-                return 'D';
-            }
-            else if(input == "Q")
-            {
-                return 'Q';
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-                return 'X';
-            };
+                string input = Console.ReadLine()/*.ToUpper()*/;
+                Console.WriteLine(" ");
+
+                //Validate input
+                if (String.Compare(input, "A", true) == 0)
+                {
+                    return 'A';
+                } else if (String.Compare(input, "V", true) == 0)
+                {
+                    return 'V';
+                } else if (String.Equals(input, "E", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return 'E';
+                } else if (String.Compare(input, "D", true) == 0)
+                {
+                    return 'D';
+                } else if (String.Compare(input, "Q", true) == 0)
+                {
+                    return 'Q';
+                } else
+                {
+                    Console.WriteLine("Invalid input");
+                };
+            } while (true);
             
         }
+        #endregion
     }
 }
