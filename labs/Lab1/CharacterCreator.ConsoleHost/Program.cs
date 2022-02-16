@@ -10,22 +10,28 @@ namespace CharacterCreator.ConsoleHost
 {
     class Program
     {
-        //Data for the character to be made
+        #region Static Data
+        //Character Data
+        //********************************************************
         static string name = ""; //required
         static string profession = ""; //required
         static string race = ""; //required
-        static int[] attributes = { 0, 0, 0, 0, 0 };
+        static int[] attributes = { 0, 0, 0, 0, 0 }; //required
         static string description = " "; //not required
-        //********************************************
-        //Class / Race data
+        //********************************************************
 
+        //Class / Race data
+        //**************************************************************************************
         static string[] races = { "Vampire", "Human", "Pixie", "Elf", "Phantom", "ERROR" };
         static string[] classes = { "Wizard", "Fighter", "Warlock", "Rogue", "Druid", "ERROR" };
         static string[] attributeNames = { "Strength", "Intelligence", "Constitution", "Dexterity", "Charisma / Magic" };
-        static string[] editArray = { "Name", "Race", "Profession", attributeNames[0], attributeNames[1], attributeNames[2], attributeNames[3], attributeNames[4], "Description" };
+        static string[] editArray = { "Name", "Race", "Profession", attributeNames[0], 
+            attributeNames[1], attributeNames[2], 
+            attributeNames[3], attributeNames[4], "Description" };
         //***************************************************************************************
 
         static char input2;
+        #endregion
 
         //Entry Point
         static void Main(string[] args)
@@ -38,6 +44,7 @@ namespace CharacterCreator.ConsoleHost
             MenuLoop();
         }
 
+        #region Control Functions
         private static void MenuLoop ()
         {
             Console.WriteLine(" ");
@@ -50,7 +57,46 @@ namespace CharacterCreator.ConsoleHost
             ValidateMenuInput(input2);
             Console.WriteLine(" ");
         }
+        static char DisplayMenu ()
+        {
+            Console.WriteLine("C)reate Character");
+            Console.WriteLine("V)iew Character");
+            Console.WriteLine("E)dit Character");
+            Console.WriteLine("D)elete Character");
+            Console.WriteLine("Q)uit");
 
+            string input = Console.ReadLine().ToUpper();
+
+            //Validate input
+            if (input == "C")
+            {
+                Console.WriteLine(" ");
+                return 'C';
+            } else if (input == "V")
+            {
+                Console.WriteLine(" ");
+                return 'V';
+            } else if (input == "E")
+            {
+                Console.WriteLine(" ");
+                return 'E';
+            } else if (input == "D")
+            {
+                Console.WriteLine(" ");
+                return 'D';
+            } else if (input == "Q")
+            {
+                Console.WriteLine(" ");
+                return 'Q';
+            } else
+            {
+                Console.WriteLine("Invalid input");
+                Console.WriteLine(" ");
+                return 'X';
+            };
+
+
+        }
         private static void ValidateMenuInput (char input)
         {
             if (input =='C')
@@ -68,7 +114,9 @@ namespace CharacterCreator.ConsoleHost
             } else
                 CallToQuit();
         }
-
+        #endregion 
+        //Menu choice validation, menu display, and program 'run till user types quit' functionality
+        #region Command Functions
         private static void DeleteCharacter ()
         {
             if (name == "")
@@ -200,10 +248,9 @@ namespace CharacterCreator.ConsoleHost
             MenuLoop();
 
         }
-
         private static void CallToQuit ()
         {
-           bool answer = Confirm("Are you sure you want to quit? (Y/N)");
+            bool answer = Confirm("Are you sure you want to quit? (Y/N)");
 
             if (answer == false)
                 MenuLoop();
@@ -213,48 +260,10 @@ namespace CharacterCreator.ConsoleHost
                 //Terminate Program
             }
         }
-
-        static char DisplayMenu ()
-        {
-            Console.WriteLine("C)reate Character");
-            Console.WriteLine("V)iew Character");
-            Console.WriteLine("E)dit Character");
-            Console.WriteLine("D)elete Character");
-            Console.WriteLine("Q)uit");
-
-            string input = Console.ReadLine().ToUpper();
-
-            //Validate input
-            if (input == "C")
-            {
-                Console.WriteLine(" ");
-                return 'C';
-            } else if (input == "V")
-            {
-                Console.WriteLine(" ");
-                return 'V';
-            } else if (input == "E")
-            {
-                Console.WriteLine(" ");
-                return 'E';
-            } else if (input == "D")
-            {
-                Console.WriteLine(" ");
-                return 'D';
-            } else if (input == "Q")
-            {
-                Console.WriteLine(" ");
-                return 'Q';
-            } else
-            {
-                Console.WriteLine("Invalid input");
-                Console.WriteLine(" ");
-                return 'X';
-            };
-
-            
-        }
-
+        #endregion 
+        //Menu options/functions
+        #region Helper Functions
+        
         static int GetNumberValue ()
         {
             while (true)
@@ -299,10 +308,7 @@ namespace CharacterCreator.ConsoleHost
 
 
             } while (true);
-
-
-
-            return null;
+                      
         }
 
         static string GetStringInput_NON_List(string message )
@@ -319,7 +325,7 @@ namespace CharacterCreator.ConsoleHost
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
 
-                //TODO: Validate
+                //Validate 'Y' or 'N'
 
                 if (key.Key == ConsoleKey.Y)
                 {
@@ -333,6 +339,8 @@ namespace CharacterCreator.ConsoleHost
                 };
             } while (true);
         }
+        #endregion
+        //Assisting functions called in the 'Command Functions'
     }
 }
 
