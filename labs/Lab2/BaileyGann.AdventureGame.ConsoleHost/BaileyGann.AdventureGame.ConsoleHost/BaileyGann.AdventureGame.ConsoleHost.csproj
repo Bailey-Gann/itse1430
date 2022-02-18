@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MovieLib\MovieLib.csproj" />
+    <ProjectReference Include="..\BaileyGann.AdventureGame\BaileyGann.AdventureGame.csproj" />
   </ItemGroup>
 
 </Project>

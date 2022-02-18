@@ -19,13 +19,7 @@ namespace MovieLib.ConsoleHost
             {
                 char input = DisplayMenu();
 
-                //TODO: Handle input
-                //if (input == 'A')
-                //    AddMovie();
-                //else if (input =='Q')
-                //{ if (ConfirmQuit()) break; /*exit loop, terminate program*/ }
-                //else if(input == 'V')
-                //    ViewMovie();
+                //Handle input
                 switch (input)
                 {
                     case 'a': //Fallthrough is allowed when case statement is empty
@@ -53,36 +47,58 @@ namespace MovieLib.ConsoleHost
             
         }
 
+        #region Menu Functions
+        //Handle input 'A', for adding a movie
+        private static void AddMovie ()
+        {
+            movie = new Movie(1);
+
+            movie.title = ReadString("Enter a movie title: ", true);
+            //movie.setTitle(ReadString("Enter a movie title: ", true));
+            movie.duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
+            //movie.setDuration(ReadInt32("Enter duration in minutes (>=0): ", 0));
+            movie.releaseYear = ReadInt32("Enter the release year: ", 1900);
+            //movie.setReleaseYear(ReadInt32("Enter the release year: ", 1900));
+            movie.rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
+            //movie.setRating(ReadString("Enter a rating (e.g. PG, PG-13): ", true));
+            movie.genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
+            //movie.setGenre(ReadString("Enter a genre (optional): ", false));
+            movie.isColor = ReadBoolean("In color (Y/N)? ");
+            //movie.setIsColor(ReadBoolean("In color (Y/N)? "));
+            movie.description = ReadString("Enter a description (optional): ", false);
+            //movie.setDescription(ReadString("Enter a description (optional): ", false));
+        }
+        //Handle input 'E', giving the user a message "Feature not yet supported"
         private static void EditMovie ()
         {
             Console.WriteLine("Feature not yet supported...");
             
         }
-
+        //Handle input 'D', for deletion of movie
         private static void DeleteMovie ()
         {
-            if (String.IsNullOrEmpty(title))
+            if (String.IsNullOrEmpty(movie.title))
             {
                 Console.WriteLine("No movie to delete.");
                 return;
             }
 
             //Delete the movie
-            if(ReadBoolean($"Are you sure you want to delete '{title}' (Y/N) "))
-                title = "";
+            if(ReadBoolean($"Are you sure you want to delete '{movie.title}' (Y/N) "))
+                movie.title = "";
         }
-
+        //Handle input 'V', for viewing movie
         private static void ViewMovie ()
         {
             //Does movie exist
-            if (String.IsNullOrEmpty(title))
+            if (String.IsNullOrEmpty(movie.title))
             {
                 Console.WriteLine("No movie to view");
                 return;
             };
 
             
-            Console.WriteLine(title);
+            Console.WriteLine(movie.title);
 
             //releaseYear (duration mins) rating
             //Formatting 1 - string concatenation
@@ -95,7 +111,7 @@ namespace MovieLib.ConsoleHost
 
             //Formatting 3 - string interpolation
             //ONLY WORKS ON STRING LITERALS, NOT ON STORED VALUES
-            Console.WriteLine($"{releaseYear} ({duration} mins) {rating}");
+            Console.WriteLine($"{movie.releaseYear} ({movie.duration} mins) {movie.rating}");
 
             //genre (Color | Black White)
             //Console.WriteLine(genre + " (" + isColor + ")");
@@ -105,46 +121,26 @@ namespace MovieLib.ConsoleHost
             //    Console.WriteLine($"{genre} (Black and White)");
             //Conditional operator
             //'Bool value'/' ? '/ 'true value'/ ' : '/ 'false value'
-            Console.WriteLine($"{genre} ({(isColor ? "Color" : "Black and White")})");
+            Console.WriteLine($"{movie.genre} ({(movie.isColor ? "Color" : "Black and White")})");
 
             //Console.WriteLine(duration);
             //Console.WriteLine(isColor);
             //Console.WriteLine(rating);
             //Console.WriteLine(genre);
-            Console.WriteLine(description);
+            Console.WriteLine(movie.description);
         }
-
+        //Handle input 'Q', for quitting the program
         static bool ConfirmQuit ()
         {
             return ReadBoolean("Are you sure you want to quit (Y/N)? ");
             
         }
-        private static void AddMovie ()
-        {
-            title = ReadString("Enter a movie title: ", true);
-            duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
-            releaseYear = ReadInt32("Enter the release year: ", 1900);
-            rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
-            genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
-            isColor = ReadBoolean("In color (Y/N)? ");
-            description = ReadString("Enter a description (optional): ", false);
-        }
-
-        //*********************************************************
-        //*********************************************************
-        //=====================Unit 1 only=========================
-        //*********************************************************
-        #region Static Data
-        static string title;
-        static int duration;
-        static int releaseYear;
-        static string rating;
-        static string genre;
-        static bool isColor;
-        static string description;
+        
         #endregion
-        //*********************************************************
-        //*********************************************************
+
+       
+        static Movie movie;
+              
 
         #region Helper Functions
         static bool ReadBoolean (string message )

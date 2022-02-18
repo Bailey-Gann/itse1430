@@ -37,7 +37,7 @@ namespace CharacterCreator.ConsoleHost
         static void Main(string[] args)
         {
             //Get today's date and time
-            DateTime today = DateTime.Now;
+            var today = DateTime.Now;
             Console.WriteLine("Bailey Gann \nITSE 1430 \n" + today + "\n");
           
             //Let the building begin... :)

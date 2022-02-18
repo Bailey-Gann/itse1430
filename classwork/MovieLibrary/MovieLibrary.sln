@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLib.ConsoleHost", "MovieLib.ConsoleHost\MovieLib.ConsoleHost.csproj", "{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", "{387BB9EC-43A5-40C7-8F15-FD4EA2118143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharacterCreator.ConsoleHost", "..\..\labs\Lab1\CharacterCreator.ConsoleHost\CharacterCreator.ConsoleHost.csproj", "{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterCreator.ConsoleHost", "..\..\labs\Lab1\CharacterCreator.ConsoleHost\CharacterCreator.ConsoleHost.csproj", "{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLib", "MovieLib\MovieLib.csproj", "{59BEE2EA-104E-42A3-83CA-817C8A099431}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{387BB9EC-43A5-40C7-8F15-FD4EA2118143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{387BB9EC-43A5-40C7-8F15-FD4EA2118143}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{387BB9EC-43A5-40C7-8F15-FD4EA2118143}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{387BB9EC-43A5-40C7-8F15-FD4EA2118143}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BEE2EA-104E-42A3-83CA-817C8A099431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BEE2EA-104E-42A3-83CA-817C8A099431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BEE2EA-104E-42A3-83CA-817C8A099431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BEE2EA-104E-42A3-83CA-817C8A099431}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
