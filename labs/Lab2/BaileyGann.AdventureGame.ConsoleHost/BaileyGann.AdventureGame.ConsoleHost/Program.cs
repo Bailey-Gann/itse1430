@@ -1,4 +1,10 @@
-﻿using System;
+/*
+* Bailey Gann
+* ITSE 1430
+* Lab 2
+*/
+
+using System;
 
 namespace BaileyGann.AdventureGame.ConsoleHost
 {
