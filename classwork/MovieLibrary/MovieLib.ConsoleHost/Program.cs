@@ -51,22 +51,33 @@ namespace MovieLib.ConsoleHost
         //Handle input 'A', for adding a movie
         private static void AddMovie ()
         {
-            movie = new Movie(1);
+            movie = new Movie();
+            do
+            {
+                movie.Title = ReadString("Enter a movie title: ", true);
+                //movie.setTitle(ReadString("Enter a movie title: ", true));
+                movie._duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
+                //movie.setDuration(ReadInt32("Enter duration in minutes (>=0): ", 0));
+                movie._releaseYear = ReadInt32("Enter the release year: ", 1900);
+                //movie.setReleaseYear(ReadInt32("Enter the release year: ", 1900));
+                movie._rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
+                //movie.setRating(ReadString("Enter a rating (e.g. PG, PG-13): ", true));
+                movie._genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
+                                                                              //movie.setGenre(ReadString("Enter a genre (optional): ", false));
+                movie._isClassic = ReadBoolean("Is classic (Y/N)? ");
+                //movie.setIsColor(ReadBoolean("In color (Y/N)? "));
+                movie._description = ReadString("Enter a description (optional): ", false);
+                //movie.setDescription(ReadString("Enter a description (optional): ", false));
 
-            movie.title = ReadString("Enter a movie title: ", true);
-            //movie.setTitle(ReadString("Enter a movie title: ", true));
-            movie.duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
-            //movie.setDuration(ReadInt32("Enter duration in minutes (>=0): ", 0));
-            movie.releaseYear = ReadInt32("Enter the release year: ", 1900);
-            //movie.setReleaseYear(ReadInt32("Enter the release year: ", 1900));
-            movie.rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
-            //movie.setRating(ReadString("Enter a rating (e.g. PG, PG-13): ", true));
-            movie.genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
-            //movie.setGenre(ReadString("Enter a genre (optional): ", false));
-            movie.isColor = ReadBoolean("In color (Y/N)? ");
-            //movie.setIsColor(ReadBoolean("In color (Y/N)? "));
-            movie.description = ReadString("Enter a description (optional): ", false);
-            //movie.setDescription(ReadString("Enter a description (optional): ", false));
+                //movie.isBlackAndWhite = movie.releaseYear <= 1939;
+                movie.CalculateBlackAndWhite();
+
+                var error = movie.Validate();
+                if (String.IsNullOrEmpty(error))
+                    return;
+
+                Console.WriteLine(error);
+            } while (true);
         }
         //Handle input 'E', giving the user a message "Feature not yet supported"
         private static void EditMovie ()
@@ -77,28 +88,30 @@ namespace MovieLib.ConsoleHost
         //Handle input 'D', for deletion of movie
         private static void DeleteMovie ()
         {
-            if (String.IsNullOrEmpty(movie.title))
+            //if (String.IsNullOrEmpty(movie.title))
+            if(movie == null)
             {
                 Console.WriteLine("No movie to delete.");
                 return;
             }
 
             //Delete the movie
-            if(ReadBoolean($"Are you sure you want to delete '{movie.title}' (Y/N) "))
-                movie.title = "";
+            if(ReadBoolean($"Are you sure you want to delete '{movie._title}' (Y/N) "))
+                movie = null;
         }
         //Handle input 'V', for viewing movie
         private static void ViewMovie ()
         {
             //Does movie exist
-            if (String.IsNullOrEmpty(movie.title))
+            //if (String.IsNullOrEmpty(movie.title))
+            if(movie == null)
             {
                 Console.WriteLine("No movie to view");
                 return;
             };
 
             
-            Console.WriteLine(movie.title);
+            Console.WriteLine(movie._title);
 
             //releaseYear (duration mins) rating
             //Formatting 1 - string concatenation
@@ -111,7 +124,7 @@ namespace MovieLib.ConsoleHost
 
             //Formatting 3 - string interpolation
             //ONLY WORKS ON STRING LITERALS, NOT ON STORED VALUES
-            Console.WriteLine($"{movie.releaseYear} ({movie.duration} mins) {movie.rating}");
+            Console.WriteLine($"{movie._releaseYear} ({movie._duration} mins) {movie._rating}");
 
             //genre (Color | Black White)
             //Console.WriteLine(genre + " (" + isColor + ")");
@@ -121,13 +134,13 @@ namespace MovieLib.ConsoleHost
             //    Console.WriteLine($"{genre} (Black and White)");
             //Conditional operator
             //'Bool value'/' ? '/ 'true value'/ ' : '/ 'false value'
-            Console.WriteLine($"{movie.genre} ({(movie.isColor ? "Color" : "Black and White")})");
+            Console.WriteLine($"{movie._genre} ({(movie._isClassic ? "Classic" : "")})");
 
             //Console.WriteLine(duration);
             //Console.WriteLine(isColor);
             //Console.WriteLine(rating);
             //Console.WriteLine(genre);
-            Console.WriteLine(movie.description);
+            Console.WriteLine(movie._description);
         }
         //Handle input 'Q', for quitting the program
         static bool ConfirmQuit ()
@@ -214,11 +227,10 @@ namespace MovieLib.ConsoleHost
 
         static char DisplayMenu ()
         {
-            Console.WriteLine("Movie Library");
+            Console.WriteLine("\nMovie Library");
             //Console.WriteLine("-------------");
             Console.WriteLine("".PadLeft(20, '-'));
-            Console.WriteLine(" ");
-            Console.WriteLine("A)dd Movie");
+            Console.WriteLine("\nA)dd Movie");
             Console.WriteLine("V)iew Movie");
             Console.WriteLine("E)dit Movie");
             Console.WriteLine("D)elete Movie");

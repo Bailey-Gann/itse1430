@@ -11,83 +11,131 @@ namespace MovieLib
         //    Readable and writable ( assuming accesibility)
         //    Work just like all other variables
         //
-       public string title;
-       public int duration;
-       public int releaseYear = 1900;
-       public string rating;
-       public string genre;
-       public bool isColor;
-       public string description;
+
+        /// <summary>
+        /// Gets or sets the title of the movie.
+        /// </summary>
+       
+       public string Title
+        {
+            get { return _title; }
+            set { _title = value; }
+        }
+       private string _title;
+       public int _duration;
+       public int _releaseYear = 1900;
+       public string _rating;
+       public string _genre;
+       public bool _isClassic;
+       public string _description;
+
+        //BW <= 1939
+        public bool IsBlackAndWhite
+        {
+            get { return _isBlackAndWhite; }
+            set { }
+        }
+        public bool _isBlackAndWhite;
 
         private int id;
 
-        public Movie (int id)
+        public void CalculateBlackAndWhite ()
         {
-            this.id = id;
+            _isBlackAndWhite = _releaseYear <= 1939;
+        }
+
+        /// <summary>Validates the instane</summary>
+        /// <returns></returns>
+        public string Validate ()
+        {
+            //Title is required
+            if (String.IsNullOrEmpty(_title))
+                return "\nTitle is required\n";
+
+            if (_duration < 0)
+                return "\nDuration must be at least 0\n";
+
+            if (_releaseYear < 1900)
+                return "\nRelease year must be at least 1900\n";
+
+            if (String.IsNullOrEmpty(_rating))
+                return "\nRating is required\n";
+
+            //Special rule - no classic movies before 1940
+            if (_isClassic && _releaseYear < 1940)
+                return "\nRelease year must be at least 1940 to be a classic\n";
+
+
+            return "\n";
+        }
+        
+        public Movie ( /*int id*/ )
+        {
+            //this.id = id;
         }
 
         #region Getters
-        public string getTitle ()
+        public string GetTitle ()
         {
-            return this.title;
+            return this._title;
         }
-        public int getDuration ()
+        public int GetDuration ()
         {
-            return this.duration;
+            return this._duration;
         }
-        public int getReleaseYear ()
+        public int GetReleaseYear ()
         {
-            return this.releaseYear;
+            return this._releaseYear;
         }
-        public string getRating ()
+        public string GetRating ()
         {
-            return this.rating;
+            return this._rating;
         }
-        public string getGenre ()
+        public string GetGenre ()
         {
-            return this.genre;
+            return this._genre;
         }
-        public bool getIsColor ()
+        public bool GetIsColor ()
         {
-            return this.isColor;
+            return this._isClassic;
         }
-        public string getDescription ()
+        public string GetDescription ()
         {
-            return this.description;
+            return this._description;
         }
-        public int getID ()
+        public int GetID ()
         {
             return this.id;
         }
         #endregion
         #region Setters
-        public void setTitle(string title )
+        public void SetTitle(string title )
         {
-            this.title = title;
+            this._title = title;
         }
-        public void setDuration(int duration )
+        public void SetDuration(int duration )
         {
-            this.duration = duration;
+            this._duration = duration;
         }
-        public void setReleaseYear(int year )
+        public void SetReleaseYear(int year )
         {
-            this.releaseYear = year;
+            this._releaseYear = year;
         }
-        public void setRating(string rating )
+        public void SetRating(string rating )
         {
-            this.rating = rating;
+            this._rating = rating;
         }
-        public void setGenre(string genre )
+        public void SetGenre(string genre )
         {
-            this.genre = genre;
+            this._genre = genre;
         }
-        public void setIsColor(bool isColor )
+        public void SetIsColor(bool isColor )
         {
-            this.isColor = isColor;
+            this._isClassic = isColor;
         }
-        public void setDescription(string description )
+        public void SetDescription(string description )
         {
-            this.description = description;
+            this._description = description;
         }
         #endregion
     }

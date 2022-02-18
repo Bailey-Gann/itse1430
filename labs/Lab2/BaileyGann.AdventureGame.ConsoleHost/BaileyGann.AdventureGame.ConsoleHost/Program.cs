@@ -10,3 +10,12 @@ namespace BaileyGann.AdventureGame.ConsoleHost
         }
     }
 }
+//Story 0:
+//Story 1: Complete
+//Story 2:
+//Story 3:
+//Story 4:
+//Story 5:
+//Story 6:
+//Story 7:
+//Story 8:
