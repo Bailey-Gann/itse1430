@@ -52,25 +52,24 @@ namespace MovieLib.ConsoleHost
         private static void AddMovie ()
         {
             movie = new Movie();
+
+            object val = 10;
+            val = "Hello";
+            val = null;
+
+            //movie.IsBlackAndWhite = false;
             do
             {
                 movie.Title = ReadString("Enter a movie title: ", true);
-                //movie.setTitle(ReadString("Enter a movie title: ", true));
-                movie._duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
-                //movie.setDuration(ReadInt32("Enter duration in minutes (>=0): ", 0));
-                movie._releaseYear = ReadInt32("Enter the release year: ", 1900);
-                //movie.setReleaseYear(ReadInt32("Enter the release year: ", 1900));
-                movie._rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
-                //movie.setRating(ReadString("Enter a rating (e.g. PG, PG-13): ", true));
-                movie._genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
-                                                                              //movie.setGenre(ReadString("Enter a genre (optional): ", false));
-                movie._isClassic = ReadBoolean("Is classic (Y/N)? ");
-                //movie.setIsColor(ReadBoolean("In color (Y/N)? "));
-                movie._description = ReadString("Enter a description (optional): ", false);
-                //movie.setDescription(ReadString("Enter a description (optional): ", false));
-
+                movie.Duration = ReadInt32("Enter duration in minutes (>=0): ", 0);
+                movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900);
+                movie.Rating = ReadString("Enter a rating (e.g. PG, PG-13): ", true);
+                movie.Genre = ReadString("Enter a genre (optional): ", false);//can be array, as movies fit multiple genres sometimes
+                movie.IsClassic = ReadBoolean("Is classic (Y/N)? ");
+                movie.Description = ReadString("Enter a description (optional): ", false);
+                
                 //movie.isBlackAndWhite = movie.releaseYear <= 1939;
-                movie.CalculateBlackAndWhite();
+                //movie.CalculateBlackAndWhite();
 
                 var error = movie.Validate();
                 if (String.IsNullOrEmpty(error))
@@ -96,7 +95,7 @@ namespace MovieLib.ConsoleHost
             }
 
             //Delete the movie
-            if(ReadBoolean($"Are you sure you want to delete '{movie._title}' (Y/N) "))
+            if(ReadBoolean($"Are you sure you want to delete '{movie.Title}' (Y/N) "))
                 movie = null;
         }
         //Handle input 'V', for viewing movie
@@ -111,7 +110,7 @@ namespace MovieLib.ConsoleHost
             };
 
             
-            Console.WriteLine(movie._title);
+            Console.WriteLine(movie.Title);
 
             //releaseYear (duration mins) rating
             //Formatting 1 - string concatenation
@@ -124,7 +123,7 @@ namespace MovieLib.ConsoleHost
 
             //Formatting 3 - string interpolation
             //ONLY WORKS ON STRING LITERALS, NOT ON STORED VALUES
-            Console.WriteLine($"{movie._releaseYear} ({movie._duration} mins) {movie._rating}");
+            Console.WriteLine($"{movie.ReleaseYear} ({movie.Duration} mins) {movie.Rating}");
 
             //genre (Color | Black White)
             //Console.WriteLine(genre + " (" + isColor + ")");
@@ -134,13 +133,13 @@ namespace MovieLib.ConsoleHost
             //    Console.WriteLine($"{genre} (Black and White)");
             //Conditional operator
             //'Bool value'/' ? '/ 'true value'/ ' : '/ 'false value'
-            Console.WriteLine($"{movie._genre} ({(movie._isClassic ? "Classic" : "")})");
+            Console.WriteLine($"{movie.Genre} ({(movie.IsClassic ? "Classic" : "")})");
 
             //Console.WriteLine(duration);
             //Console.WriteLine(isColor);
             //Console.WriteLine(rating);
             //Console.WriteLine(genre);
-            Console.WriteLine(movie._description);
+            Console.WriteLine(movie.Description);
         }
         //Handle input 'Q', for quitting the program
         static bool ConfirmQuit ()
