@@ -176,7 +176,7 @@ namespace MovieLib.ConsoleHost
 
         //TODO: Fix these variables to remove warnings
         static Movie movie;
-        static MovieDatabase _movies = new MovieDatabase("My Movies");
+        static MemoryMovieDatabase _movies = new MemoryMovieDatabase();
 
         //Type checking
         static void Display ( object data )

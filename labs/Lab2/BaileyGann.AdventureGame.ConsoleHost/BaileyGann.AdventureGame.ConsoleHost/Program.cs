@@ -12,13 +12,13 @@ namespace BaileyGann.AdventureGame.ConsoleHost
     {
        static Player s_kirby = new AdventureGame.Player();
        static World s_gameWorld = new AdventureGame.World();
-        static void Main(string[] args)
+        static void Main ( string[] args )
         {
-           
-            
-            
-            var today = DateTime.Now;
-            Console.WriteLine("Bailey Gann \nITSE 1430 \n" + today + "\n\n");
+
+
+
+
+            Console.WriteLine($"Bailey Gann \nITSE 1430 \n{DateTime.Now}\n\n");
 
             s_gameWorld.CreateRooms();
             Console.WriteLine(s_gameWorld.WorldDescription);
@@ -44,6 +44,12 @@ namespace BaileyGann.AdventureGame.ConsoleHost
             else if(inputChar == 'M')
             {
                 Move(s_kirby);
+            } else if (inputChar == 'L')
+            {
+                Look(s_kirby);
+            }else if(inputChar == 'C')
+            {
+                CurrentState(s_kirby);
             }
             else
             {
@@ -56,7 +62,7 @@ namespace BaileyGann.AdventureGame.ConsoleHost
         static char DisplayMenu ()
         {
             Console.WriteLine("\n");
-            Console.WriteLine();
+            Console.WriteLine("C)urrent area/room");
             Console.WriteLine("L)ook");
             Console.WriteLine("M)ove");
             Console.WriteLine("Q)uit\n");
@@ -70,10 +76,13 @@ namespace BaileyGann.AdventureGame.ConsoleHost
             } else if (input == "M")
             {
                 return 'M';
-            } else if(input == "L")
+            } else if (input == "L")
             {
                 return 'L';
-            }else
+            } else if (input == "C")
+            {
+                return 'C';
+            } else
             {
                 Console.WriteLine("Invalid input");
                 Console.WriteLine(" ");
@@ -97,8 +106,21 @@ namespace BaileyGann.AdventureGame.ConsoleHost
 
             GameLoop();
         }
-        static void Look(Player name )
+        static void Look ( Player name )
         {
+            //A function to get a neighboring rooms name while maintaining current room position...
+
+            int newRoom = GetIntInputList(name.getRoomChoices(), "Which area/room number do you choose: ");
+            
+
+            Console.WriteLine($"\nThat leads to {s_gameWorld.getName(newRoom)}\n");
+
+            GameLoop();
+        }
+
+        static void CurrentState(Player name )
+        {
+            Console.WriteLine($"You are in the {s_gameWorld.getName(name.RoomNum)}");
 
             GameLoop();
         }
@@ -216,4 +238,4 @@ namespace BaileyGann.AdventureGame.ConsoleHost
 //Story 5: Complete
 //Story 6: Complete
 //Story 7: Complete
-//Story 8: 
+//Story 8: Complete

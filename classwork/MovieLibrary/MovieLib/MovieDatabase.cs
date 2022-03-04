@@ -6,24 +6,34 @@ namespace MovieLib
 {
     public class MovieDatabase
     {
-        //public MovieDatabase ()
-        //{ 
-        //    // Do minimal init of instance, if any
-        //    // Don't init fields - use field initializers
-        //    // Unless
-        //    //   Depends on other fields
-        //    //   Relies on data available after initialization
+        public MovieDatabase () : this("My Movies")
+        {
+            // Do minimal init of instance, if any
+            // Don't init fields - use field initializers
+            // Unless
+            //   Depends on other fields
+            //   Relies on data available after initialization
+        }
+
+        //Bad init approach
+        //private void Initialize ()
+        //{
+        //    _id = 1;
         //}
 
         public MovieDatabase ( string name )
         {
+            //Initialize();
+            _id = 1;
+
             Name = name;
         }
         //private string _name;
+        private int _id;
 
         public string Name { get; set; }
 
-        public void Add ( Movie movie )
+        public virtual void Add ( Movie movie )
         {
         }
 
@@ -42,5 +52,10 @@ namespace MovieLib
 
         public void Update ( Movie movie )
         { }
+    }
+
+    public class MemoryMovieDatabase
+    {
+
     }
 }
