@@ -11,6 +11,9 @@ namespace MovieLib.ConsoleHost
         //Entry point
         static void Main ( string[] args )
         {
+            //_movies = new MovieDatabase();
+            //_movies.Name = "My Movies";
+
             //Block style declaration - all variables declared at top of function
             //On demand/inline declaration - variables are declared as needed
             var done = false;
@@ -173,18 +176,20 @@ namespace MovieLib.ConsoleHost
 
         //TODO: Fix these variables to remove warnings
         static Movie movie;
+        static MovieDatabase _movies = new MovieDatabase("My Movies");
 
+        //Type checking
         static void Display ( object data )
         {
             //Assume a string
 
-            //C-style cast
+            //C-style cast ::= (T) E
             //    Runtime error if wrong
             //    No way to validate at runtime
             //    Still compile time safe (string)10;
-            // is-operator ::= //    E is T -> boolean
-            //    Still need a type cast
-            //as-operator ::= E as T (returns T or null)
+            // is-operator ::= E is T  (boolean)
+            //    Still need a type cast 
+            // as-operator ::= E as T (returns T or null)
             //    Only works with T if T is nullable (string, object, class types)
             // pattern-matching ::= E is T id (boolean with id as typed value if true)
             var dataString = (string)data;
@@ -194,16 +199,14 @@ namespace MovieLib.ConsoleHost
                 dataString = (string)data;
             };
 
+            //data as int
             dataString = data as string;
             if (dataString != null) { };
 
-
             //Pattern matching
-            if(data is string dataString2)
+            if (data is string dataString2)
             {
-                //code that can use variable dataString2
             };
-
         }
 
         #region Helper Functions

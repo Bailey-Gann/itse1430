@@ -10,53 +10,104 @@ namespace BaileyGann.AdventureGame.ConsoleHost
 {
     class Program
     {
-        static string[] blank;
+       static Player s_kirby = new AdventureGame.Player();
+       static World s_gameWorld = new AdventureGame.World();
         static void Main(string[] args)
         {
-            int mainCalled = 0;
-            if(mainCalled == 0)
-            {
-                var today = DateTime.Now;
-                Console.WriteLine("Bailey Gann \nITSE 1430 \n" + today + "\n");
-            }
+           
+            
+            
+            var today = DateTime.Now;
+            Console.WriteLine("Bailey Gann \nITSE 1430 \n" + today + "\n\n");
 
-            mainCalled++;
+            s_gameWorld.CreateRooms();
+            Console.WriteLine(s_gameWorld.WorldDescription);
 
+            GameLoop();
+
+        }
+
+        #region Game Loop Methods
+        static void GameLoop ()
+        {
+            char inputChar = 'X';
             do
             {
+                inputChar = DisplayMenu();
+            } while (inputChar == 'X');
 
-            } while (true);
+
+            if (inputChar == 'Q')
+            {
+                CallToQuit();
+            }
+            else if(inputChar == 'M')
+            {
+                Move(s_kirby);
+            }
+            else
+            {
+                Console.WriteLine("Oops");
+            }
+                     
+            
         }
 
         static char DisplayMenu ()
         {
             Console.WriteLine("\n");
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("L)ook");
+            Console.WriteLine("M)ove");
             Console.WriteLine("Q)uit\n");
 
             string input = Console.ReadLine().ToUpper();
 
             //Validate input
-            //else
-            //{
-            //    Console.WriteLine("Invalid input");
-            //    Console.WriteLine(" ");
-            //    return 'X';
-        };
-            private static void CallToQuit ()
-        {
-            bool answer = Confirm("Are you sure you want to quit? (Y/N)");
-
-            if (answer == false)
-                Main(blank);
-            else
+            if (input == "Q")
             {
-                Console.WriteLine("\nGoodbye!!\n");
-                //Terminate Program
-            }
+                return 'Q';
+            } else if (input == "M")
+            {
+                return 'M';
+            } else if(input == "L")
+            {
+                return 'L';
+            }else
+            {
+                Console.WriteLine("Invalid input");
+                Console.WriteLine(" ");
+                return 'X';
+            };
         }
+        #endregion
+
+        #region Command Fundtions
+        private static bool CallToQuit ()
+        {
+            return Confirm("Are you sure you want to quit (y/n)? ");
+        }
+
+        static void Move (Player name)
+        {
+            int newRoom = GetIntInputList(name.getRoomChoices(), "Which area/room number do you choose: ");
+            name.MoveTo(newRoom);
+
+            Console.WriteLine($"\n{s_gameWorld.getDescription(newRoom)}");
+
+            GameLoop();
+        }
+        static void Look(Player name )
+        {
+
+            GameLoop();
+        }
+
+        #endregion
+
+
+
+        #region Helper Functions
         static string GetStringInputList (string[] arrayUsed, string message )
         {
             string input = "";
@@ -86,6 +137,46 @@ namespace BaileyGann.AdventureGame.ConsoleHost
             return input;
         }
 
+        static int GetIntInputList ( int[] arrayUsed, string message )
+        {
+            int result;
+            bool validateOption = false;
+
+            do
+            {
+                Console.Write(message);
+                
+                for(int i = 0; i < arrayUsed.Length; i++)
+                {
+                    Console.Write(arrayUsed[i] + " ");
+                }
+                Console.WriteLine("");
+
+                var input = Console.ReadLine();
+
+                result = Int32.Parse(input);
+
+                for (int i = 0; i < arrayUsed.Length; i++)
+                {
+                    if (result == arrayUsed[i])
+                    {
+                        
+                        validateOption = true;
+                        break;
+                    }
+                }
+
+                if (validateOption == false)
+                {
+                    Console.WriteLine("Invaild input! \nPlease choose a value from the list...\n");
+                }
+            
+
+            } while (!validateOption);
+
+            return result;
+        }
+
         static string GetStringInput_NON_List ( string message )
         {
             Console.WriteLine(message);
@@ -113,14 +204,16 @@ namespace BaileyGann.AdventureGame.ConsoleHost
                 };
             } while (true);
         }
+
+        #endregion
     }
 }
-//Story 0:
+//Story 0: Complete (look in class World)
 //Story 1: Complete
 //Story 2: Complete
-//Story 3:
-//Story 4:
-//Story 5:
-//Story 6:
-//Story 7:
-//Story 8:
+//Story 3: Complete
+//Story 4: Complete
+//Story 5: Complete
+//Story 6: Complete
+//Story 7: Complete
+//Story 8: 
