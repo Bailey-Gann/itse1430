@@ -6,6 +6,7 @@ namespace MovieLib
 {
     public class MovieDatabase
     {
+        //Constructor chaining - one constructor calls another one
         public MovieDatabase () : this("My Movies")
         {
             // Do minimal init of instance, if any
@@ -33,6 +34,8 @@ namespace MovieLib
 
         public string Name { get; set; }
 
+        //Virtual means derived types can override but base type has default implementation
+        //Override means a derived type is overriding a base type's implementation
         public virtual void Add ( Movie movie )
         {
         }
@@ -52,10 +55,20 @@ namespace MovieLib
 
         public void Update ( Movie movie )
         { }
+
+        protected void Foo () { }
     }
 
-    public class MemoryMovieDatabase
+    public class MemoryMovieDatabase : MovieDatabase
     {
+        public MemoryMovieDatabase () : base("Memory Movies")
+        {
 
+        }
+
+        public override void Add ( Movie movie )
+        {
+            base.Add(movie);
+        }
     }
 }
