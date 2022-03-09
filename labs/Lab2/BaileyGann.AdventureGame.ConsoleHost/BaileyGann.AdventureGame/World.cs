@@ -24,7 +24,7 @@ namespace BaileyGann.AdventureGame
         
         public World ()
         {
-            
+            CreateRooms();
         }
 
 
