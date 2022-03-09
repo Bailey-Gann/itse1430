@@ -18,7 +18,7 @@ namespace BaileyGann.AdventureGame.ConsoleHost
 
 
 
-            Console.WriteLine($"Bailey Gann \nITSE 1430 \n{DateTime.Now}\n\n")
+            Console.WriteLine($"Bailey Gann \nITSE 1430 \n{DateTime.Now}\n\n");
                 
             Console.WriteLine(s_gameWorld.WorldDescription);
 

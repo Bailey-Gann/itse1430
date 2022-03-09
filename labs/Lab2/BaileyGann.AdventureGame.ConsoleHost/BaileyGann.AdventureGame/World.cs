@@ -27,7 +27,7 @@ namespace BaileyGann.AdventureGame
             CreateRooms();
         }
 
-
+        #region World Functionality
         //Implement 9 rooms
         //    Room '0' in array is starting room
         //    Set room IDs
@@ -52,6 +52,7 @@ namespace BaileyGann.AdventureGame
         {
             return _roomNames[id -1];
         }
+        #endregion
 
         #region stringArray fields
         string[] _roomNames = { "The Great Hall", "The Dwarven Kitchen", "The Arcane Library",
