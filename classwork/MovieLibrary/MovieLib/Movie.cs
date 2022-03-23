@@ -115,7 +115,13 @@ namespace MovieLib
         //    private set { _id = value; }
         //}
         //private int _id;
+        public override string ToString ()
+        {
+            return $"{Title} ({ReleaseYear})";
+        }
+
     }
+   
 
     #region Class Notes
     // Class - wraps data and functionality
