@@ -89,17 +89,20 @@ namespace MovieLib.WinHost
             return _lstMovies.SelectedItem as Movie;
         }
 
-        private void OnFileExit ( object sender, EventArgs e )
+        protected override void OnFormClosing (FormClosingEventArgs e )
         {
             //Confirm exit
             DialogResult dr = MessageBox.Show(this, "Are you sure you want to quit?", "Quit", MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (dr == DialogResult.Yes)
-            {
-                //user clicked yes
-                Close();
-            };
+            if (dr != DialogResult.Yes)
+                e.Cancel = true;
+            
+        }
+
+        private void OnFileExit ( object sender, EventArgs e )
+        {
+            Close();
         }
 
         private void UpdateUI ()

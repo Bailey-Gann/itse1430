@@ -6,4 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaileyGann.AdventureGame\BaileyGann.AdventureGame.csproj" />
+  </ItemGroup>
+
 </Project>
