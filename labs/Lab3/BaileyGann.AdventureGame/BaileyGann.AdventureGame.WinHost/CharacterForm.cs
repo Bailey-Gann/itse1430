@@ -104,6 +104,28 @@ namespace BaileyGann.AdventureGame.WinHost
                 _errors.SetError(control, "");
         }
 
-       
+        private void OnProfessionCheck ( object sender, CancelEventArgs e )
+        {
+            var control = sender as Control;
+            if(String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "Profession is required");
+                e.Cancel = true;
+            }
+             else
+                _errors.SetError(control, "");
+        }
+
+        private void OnRaceCheck ( object sender, CancelEventArgs e )
+        {
+            var control = sender as Control;
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "Race is required");
+                e.Cancel = true;
+            }
+            else
+                _errors.SetError(control, "");
+        }
     }
 }

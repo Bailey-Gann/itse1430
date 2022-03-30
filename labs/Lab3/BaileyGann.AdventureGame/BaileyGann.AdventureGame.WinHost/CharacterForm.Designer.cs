@@ -155,6 +155,7 @@ namespace BaileyGann.AdventureGame.WinHost
             // 
             // _btnCancel
             // 
+            this._btnCancel.CausesValidation = false;
             this._btnCancel.Location = new System.Drawing.Point(324, 394);
             this._btnCancel.Name = "_btnCancel";
             this._btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -213,6 +214,7 @@ namespace BaileyGann.AdventureGame.WinHost
             // 
             // _ddlProfession
             // 
+            this._ddlProfession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._ddlProfession.FormattingEnabled = true;
             this._ddlProfession.Items.AddRange(new object[] {
             "Wizard",
@@ -224,9 +226,11 @@ namespace BaileyGann.AdventureGame.WinHost
             this._ddlProfession.Name = "_ddlProfession";
             this._ddlProfession.Size = new System.Drawing.Size(121, 23);
             this._ddlProfession.TabIndex = 2;
+            this._ddlProfession.Validating += new System.ComponentModel.CancelEventHandler(this.OnProfessionCheck);
             // 
             // _ddlRace
             // 
+            this._ddlRace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._ddlRace.FormattingEnabled = true;
             this._ddlRace.Items.AddRange(new object[] {
             "Vampire",
@@ -238,15 +242,18 @@ namespace BaileyGann.AdventureGame.WinHost
             this._ddlRace.Name = "_ddlRace";
             this._ddlRace.Size = new System.Drawing.Size(121, 23);
             this._ddlRace.TabIndex = 3;
+            this._ddlRace.Validating += new System.ComponentModel.CancelEventHandler(this.OnRaceCheck);
             // 
             // _errors
             // 
+            this._errors.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this._errors.ContainerControl = this;
             // 
             // CharacterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(442, 450);
             this.ControlBox = false;
             this.Controls.Add(this._ddlRace);
