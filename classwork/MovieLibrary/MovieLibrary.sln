@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLib.ConsoleHost", "MovieLib.ConsoleHost\MovieLib.ConsoleHost.csproj", "{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharacterCreator.ConsoleHost", "..\..\labs\Lab1\CharacterCreator.ConsoleHost\CharacterCreator.ConsoleHost.csproj", "{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLib", "MovieLib\MovieLib.csproj", "{59BEE2EA-104E-42A3-83CA-817C8A099431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLib.WinHost", "MovieLib.WinHost\MovieLib.WinHost.csproj", "{259308AB-C417-4043-97B1-FF3CCA0790EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLib.WinHost", "MovieLib.WinHost\MovieLib.WinHost.csproj", "{259308AB-C417-4043-97B1-FF3CCA0790EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6AC309B-7BC5-462D-9DCA-415DE4EA3E92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD700B2-85BB-4433-92FB-EFA68C49F9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
