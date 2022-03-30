@@ -134,7 +134,6 @@ namespace MovieLib.WinHost
             this.MainMenuStrip = this._mainMenu;
             this.Name = "MainForm";
             this.Text = "MainForm";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this._mainMenu.ResumeLayout(false);
             this._mainMenu.PerformLayout();
             this.ResumeLayout(false);

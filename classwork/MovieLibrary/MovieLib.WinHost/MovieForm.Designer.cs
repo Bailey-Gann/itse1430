@@ -120,6 +120,7 @@ namespace MovieLib.WinHost
             this._txtDuration.Name = "_txtDuration";
             this._txtDuration.Size = new System.Drawing.Size(73, 23);
             this._txtDuration.TabIndex = 3;
+            this._txtDuration.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateDuration);
             // 
             // _chkIsClassic
             // 
@@ -169,6 +170,7 @@ namespace MovieLib.WinHost
             this._txtGenre.Name = "_txtGenre";
             this._txtGenre.Size = new System.Drawing.Size(101, 23);
             this._txtGenre.TabIndex = 6;
+            this._txtGenre.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateGenre);
             // 
             // label6
             // 

@@ -18,6 +18,24 @@ namespace BaileyGann.AdventureGame.WinHost
         }
         public Character Character { get; set; }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            if (Character != null)
+            {
+                _txtName.Text = Character.Name;
+                _ddlProfession.Text = Character.Proffesion;
+                _ddlRace.Text = Character.Race;
+                _txtStrength.Text = Character.Strength.ToString();
+                _txtIntelligence.Text = Character.Intelligence.ToString();
+                _txtConstitution.Text = Character.Constitution.ToString();
+                _txtDexterity.Text = Character.Dexterity.ToString();
+                _txtCharisma.Text = Character.Charisma.ToString();
+                _txtDescription.Text = Character.Description;
+            }
+        }
+
         private void OnSave ( object sender, EventArgs e )
         {
             //Create the Character
@@ -27,11 +45,11 @@ namespace BaileyGann.AdventureGame.WinHost
             character.Name = _txtName.Text;
             character.Proffesion = _ddlProfession.Text;
             character.Race = _ddlRace.Text;
-            character.Attributes[0] = ReadAsInt32(_txtStrength, -1);
-            character.Attributes[1] = ReadAsInt32(_txtIntelligence, -1);
-            character.Attributes[2] = ReadAsInt32(_txtConstitution, -1);
-            character.Attributes[3] = ReadAsInt32(_txtDexterity, -1);
-            character.Attributes[4] = ReadAsInt32(_txtCharisma, -1);
+            character.Strength = ReadAsInt32(_txtStrength, 50);
+            character.Intelligence = ReadAsInt32(_txtIntelligence, 50);
+            character.Constitution = ReadAsInt32(_txtConstitution, 50);
+            character.Dexterity = ReadAsInt32(_txtDexterity, 50);
+            character.Charisma = ReadAsInt32(_txtCharisma, 50);
             character.Description = _txtDescription.Text;
 
             //Validate : Check

@@ -1,36 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MovieLib.WinHost
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        public MainForm ()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load ( object sender, EventArgs e )
+        protected override void OnFormClosing ( FormClosingEventArgs e )
         {
+            //Confirm exit
+            DialogResult dr = MessageBox.Show(this, "Are you sure you want to quit?", "Quit",
+                                              MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (dr != DialogResult.Yes)
+                e.Cancel = true;
         }
 
-        #region Menu Commands
+        private void OnFileExit ( object sender, EventArgs e )
+        {
+            Close();
+        }
+
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var form = new AboutBox();
+            form.ShowDialog(this);
+        }
 
         private void OnMovieAdd ( object sender, EventArgs e )
         {
             var dlg = new MovieForm();
+
+            //Show modally - blocking call
             if (dlg.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            //TODO: Save Movie
+            //TODO: Save movie
             _movie = dlg.Movie;
             UpdateUI();
         }
@@ -58,16 +67,16 @@ namespace MovieLib.WinHost
             UpdateUI();
         }
 
-            private void OnMovieDelete ( object sender, EventArgs e )
+        private void OnMovieDelete ( object sender, EventArgs e )
         {
-            //TODO: Get selected movie
+            //Get selected movie
             var movie = GetSelectedMovie();
             if (movie == null)
                 return;
 
-            //TODO: confirm delete
+            //Confirm delete
             if (MessageBox.Show(this, $"Are you sure you want to delete {movie.Title}?", "Delete",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             //TODO: Delete
@@ -75,44 +84,18 @@ namespace MovieLib.WinHost
             UpdateUI();
         }
 
-        private void OnHelpAbout ( object sender, EventArgs e )
-        {
-            var form = new AboutBox();
-            form.ShowDialog(this);
-        }
-
-        #endregion
-        #region Helper Functions
-
-        private Movie GetSelectedMovie()
+        private Movie GetSelectedMovie ()
         {
             return _lstMovies.SelectedItem as Movie;
-        }
-
-        protected override void OnFormClosing (FormClosingEventArgs e )
-        {
-            //Confirm exit
-            DialogResult dr = MessageBox.Show(this, "Are you sure you want to quit?", "Quit", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (dr != DialogResult.Yes)
-                e.Cancel = true;
-            
-        }
-
-        private void OnFileExit ( object sender, EventArgs e )
-        {
-            Close();
         }
 
         private void UpdateUI ()
         {
             _lstMovies.Items.Clear();
-            if(_movie != null)
+            if (_movie != null)
                 _lstMovies.Items.Add(_movie);
         }
 
         private Movie _movie;
-        #endregion
     }
 }

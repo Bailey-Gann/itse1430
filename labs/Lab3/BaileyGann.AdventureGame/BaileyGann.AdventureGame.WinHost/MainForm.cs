@@ -22,7 +22,7 @@ namespace BaileyGann.AdventureGame.WinHost
 
         }
 
-        #region Menu Commands
+                #region Menu Commands
 
         private void OnCharacterAdd (object sender, EventArgs e )
         {

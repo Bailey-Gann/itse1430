@@ -16,13 +16,16 @@ namespace MovieLib.WinHost
         {
             InitializeComponent();
         }
+
         public Movie Movie { get; set; }
 
         protected override void OnLoad ( EventArgs e )
         {
+            //OnLoad(e);
             base.OnLoad(e);
 
-            if(Movie != null )
+            //Load UI
+            if (Movie != null)
             {
                 _txtTitle.Text = Movie.Title;
                 _txtDescription.Text = Movie.Description;
@@ -34,7 +37,7 @@ namespace MovieLib.WinHost
             };
         }
 
-        private int ReadAsInt32(Control control, int defaultValue )
+        private int ReadAsInt32 ( Control control, int defaultValue )
         {
             if (Int32.TryParse(control.Text, out var result))
                 return result;
@@ -44,16 +47,21 @@ namespace MovieLib.WinHost
 
         private void OnSave ( object sender, EventArgs e )
         {
-            //Create new movie
+            //Check all children for valid status
+            //Ensure all children are validated
+            if (!ValidateChildren())
+                return;
+
+            //Create a new movie
             var movie = new Movie();
 
-            //set properties from UI
+            //Set properties from UI
             movie.Title = _txtTitle.Text;
             movie.Description = _txtDescription.Text;
             movie.Genre = _txtGenre.Text;
-            movie.Duration = ReadAsInt32(_txtDuration, -1);
             movie.IsClassic = _chkIsClassic.Checked;
             movie.Rating = _ddlRating.Text;
+            movie.Duration = ReadAsInt32(_txtDuration, -1);
             movie.ReleaseYear = ReadAsInt32(_txtReleaseYear, -1);
 
             //Validate
@@ -67,7 +75,7 @@ namespace MovieLib.WinHost
                 return;
             };
 
-            //Display Error
+            //Display error
             MessageBox.Show(this, error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -82,7 +90,19 @@ namespace MovieLib.WinHost
             var control = sender as Control;
             if (String.IsNullOrEmpty(control.Text))
             {
-                _errors.SetError(control, "Title is required"); e.Cancel = true;
+                _errors.SetError(control, "Title is required");
+                e.Cancel = true;
+            } else
+                _errors.SetError(control, "");
+        }
+
+        private void OnValidateGenre ( object sender, CancelEventArgs e )
+        {
+            var control = sender as Control;
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "Genre is required");
+                e.Cancel = true;
             } else
                 _errors.SetError(control, "");
         }
@@ -105,7 +125,7 @@ namespace MovieLib.WinHost
             var value = ReadAsInt32(control, -1);
             if (value < 0)
             {
-                _errors.SetError(control, $"Duration must be at least 0");
+                _errors.SetError(control, "Duration must be at least 0");
                 e.Cancel = true;
             } else
                 _errors.SetError(control, "");

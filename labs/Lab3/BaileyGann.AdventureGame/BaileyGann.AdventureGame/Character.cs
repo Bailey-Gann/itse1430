@@ -17,12 +17,20 @@ namespace BaileyGann.AdventureGame
             set { _race = value.ToUpper(); }
         }
         private string _race;
-        public double[] Attributes { get; set; }
+        public int Strength { get; set; }
+        public int Dexterity { get; set; }
+        public int Constitution { get; set; }
+        public int Intelligence { get; set; }
+        public int Charisma { get; set; }
+        
 
 
         public string Validate ()
         {
             int x = 0;
+            int y = 0;
+            int z = 0;
+            string output = "";
 
             if (String.IsNullOrEmpty(Name))
                 return $"A name is required.";
@@ -44,22 +52,33 @@ namespace BaileyGann.AdventureGame
                 case "PIXIE"  :; break;
                 case "ELF"    :; break;
                 case "PHANTOM":; break;
-                default: x = 2; break;
+                default: y = 2; break;
             };
 
-            for(int i = 0; i < 5; i++)
-            {
-                if (Attributes[i] > 100 || Attributes[i] < 0)
-                    x = 3;
-            }
+            
+                if ((Strength > 100 || Strength < 0) ||
+                (Dexterity > 100 || Dexterity < 0) ||
+                (Constitution > 100 || Constitution < 0) || 
+                (Intelligence > 100 || Intelligence < 0)|| (Charisma > 100 || Charisma < 0))
+                  {
+                      z = 3;
+                    }
+                    
+            
 
-            switch (x)
-            {
-                case 1:; return $"Please choose a valid Profession";
-                case 2:; return $"Please choose a valid Race";
-                case 3:; return $"All Attributes must be between 0 and 100";
-                default:; return null;
-            }
+            if (x != 0)
+                output = "Please choose a valid Profession\n";
+            if (y != 0)
+                output += "Please choose a valid Race\n";
+            if (z != 0)
+                output+= "Please ensure all Attributes are between 0 and 100\n";
+
+            return output;
+        }
+
+        public override string ToString ()
+        {
+            return Name;
         }
     }
      //Story_1 : Complete
