@@ -109,7 +109,7 @@ namespace MovieLib
         }
 
         /// <summary>Gets the unique ID of the movie.</summary>
-        public int Id { get; private set; }
+        public int Id { get; set; }
         //{
         //    get { return _id; }
         //    private set { _id = value; }
@@ -120,6 +120,51 @@ namespace MovieLib
             return $"{Title} ({ReleaseYear})";
         }
 
+
+        public Movie Copy ()
+        {
+            //var item = new Movie();
+            //item.Id = Id;            
+
+            //item.Title = Title;
+            //item.Description = Description;
+            //item.Duration = Duration;
+            //item.ReleaseYear = ReleaseYear;
+            //item.Rating = Rating;
+            //item.Genre = Genre;
+            //item.IsClassic = IsClassic;
+            //return item;
+
+            //Object initializer syntax
+            // Only works with new
+            // Steps:
+            //  1. Remove semicolon at end of new, add curly braces
+            //  2. Indent for readability
+            //  3. Replace semicolons with commas
+            //  4. Remove instance name
+            return new Movie() {
+                    Id = Id,
+                    Title = Title,
+                    Description = Description,
+                    Duration = Duration,
+                    ReleaseYear = ReleaseYear,
+                    Rating = Rating,
+                    Genre = Genre,
+                    IsClassic = IsClassic,
+                     };
+            
+        }
+
+        public void CopyFrom ( Movie source )
+        {            
+            Title = source.Title;
+            Description = source.Description;
+            Duration = source.Duration;
+            ReleaseYear = source.ReleaseYear;
+            Rating = source.Rating;
+            Genre = source.Genre;
+            IsClassic = source.IsClassic;
+        }
     }
    
 

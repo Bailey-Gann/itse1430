@@ -39,6 +39,7 @@ namespace MovieLib.WinHost
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this._lstMovies = new System.Windows.Forms.ListBox();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@ namespace MovieLib.WinHost
             // _miFileExit
             // 
             this._miFileExit.Name = "_miFileExit";
-            this._miFileExit.Size = new System.Drawing.Size(93, 22);
+            this._miFileExit.Size = new System.Drawing.Size(180, 22);
             this._miFileExit.Text = "E&xit";
             this._miFileExit.Click += new System.EventHandler(this.OnFileExit);
             // 
@@ -74,7 +75,8 @@ namespace MovieLib.WinHost
             this.characterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._miCharacterAdd,
             this._miMovieEdit,
-            this._miMovieDelete});
+            this._miMovieDelete,
+            this.resetToolStripMenuItem});
             this.characterToolStripMenuItem.Name = "characterToolStripMenuItem";
             this.characterToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.characterToolStripMenuItem.Text = "&Movie";
@@ -97,7 +99,7 @@ namespace MovieLib.WinHost
             // 
             this._miMovieDelete.Name = "_miMovieDelete";
             this._miMovieDelete.Size = new System.Drawing.Size(180, 22);
-            this._miMovieDelete.Text = "&Delete";
+            this._miMovieDelete.Text = "D&elete";
             this._miMovieDelete.Click += new System.EventHandler(this.OnMovieDelete);
             // 
             // helpToolStripMenuItem
@@ -123,6 +125,12 @@ namespace MovieLib.WinHost
             this._lstMovies.Name = "_lstMovies";
             this._lstMovies.Size = new System.Drawing.Size(748, 334);
             this._lstMovies.TabIndex = 1;
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetToolStripMenuItem.Text = "R&eset";
             // 
             // MainForm
             // 
@@ -153,6 +161,7 @@ namespace MovieLib.WinHost
         private System.Windows.Forms.ToolStripMenuItem _miMovieDelete;
         private System.Windows.Forms.ToolStripMenuItem _miHelpAbout;
         private System.Windows.Forms.ListBox _lstMovies;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
     }
 }
 
