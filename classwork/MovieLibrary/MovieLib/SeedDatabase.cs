@@ -6,9 +6,9 @@ namespace MovieLib
 {
     public class SeedDatabase
     {
-        public void Seed (MemoryMovieDatabase database)
+        public void Seed (IMovieDatabase database)
         {
-            database.Add(new Movie() {
+            database.Add(new Movie {
                 Title = "Jaws",
                 Genre = "Horror",
                 ReleaseYear = 1977,

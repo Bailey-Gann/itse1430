@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieLib
 {
     /// <summary>Represents a movie.</summary>
-    public class Movie
+    public class Movie : IValidatableObject
     {
         /// <summary>Gets the minimum release year.</summary>
         public const int MinimumReleaseYear = 1900;
@@ -79,34 +81,8 @@ namespace MovieLib
         //}
 
         //All instance methods have a hidden this parameter that represents the instance
-        /// <summary>Validates the instance.</summary>
-        /// <returns>Returns error message if any or empty string otherwise.</returns>
-        public string Validate ( /* Movie this */ )
-        {
-            //var now = DateTime.Now;
-
-            //var title = "";
-
-            //Title is required
-            if (String.IsNullOrEmpty(_title))
-                return "Title is required";
-
-            if (Duration < 0)
-                //if (this.duration < 0)
-                return "Duration must be at least 0";
-
-            if (ReleaseYear < MinimumReleaseYear)
-                return $"Release Year must be at least {MinimumReleaseYear}";
-
-            if (String.IsNullOrEmpty(Rating))
-                return "Rating is required";
-
-            //Special rule - no classic movies before 1940
-            if (IsClassic && ReleaseYear < 1940)
-                return "Release Year must be at least 1940 to be a classic";
-
-            return "";
-        }
+        
+       
 
         /// <summary>Gets the unique ID of the movie.</summary>
         public int Id { get; set; }
@@ -164,6 +140,24 @@ namespace MovieLib
             Rating = source.Rating;
             Genre = source.Genre;
             IsClassic = source.IsClassic;
+        }
+
+        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        {
+            if (String.IsNullOrEmpty(_title))
+                yield return new ValidationResult("Title is required", new[] {nameof(Title) });
+
+            if (Duration < 0)
+                //if (this.duration < 0)
+                yield return new ValidationResult("Duration must be at least 0", new[] { nameof(Duration) });
+
+            if (ReleaseYear < MinimumReleaseYear)
+                yield return new ValidationResult($"Release Year must be at least {MinimumReleaseYear}", new[] { nameof(ReleaseYear) });
+
+            if (String.IsNullOrEmpty(Rating))
+                yield return new ValidationResult("Rating is required", new[] { nameof(Rating) });
+
+           
         }
     }
    
