@@ -4,9 +4,9 @@ using MovieLib.Memory;
 
 namespace MovieLib
 {
-    public class SeedDatabase
+    public static class SeedDatabase
     {
-        public void Seed (IMovieDatabase database)
+        public static void Seed (this IMovieDatabase database)
         {
             database.Add(new Movie {
                 Title = "Jaws",

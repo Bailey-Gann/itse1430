@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaileyGann.AdventureGame", "BaileyGann.AdventureGame\BaileyGann.AdventureGame.csproj", "{60A45514-C2F2-47FF-B859-89294FBD0EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaileyGann.AdventureGame", "BaileyGann.AdventureGame\BaileyGann.AdventureGame.csproj", "{60A45514-C2F2-47FF-B859-89294FBD0EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaileyGann.AdventureGame.WinHost", "BaileyGann.AdventureGame.WinHost\BaileyGann.AdventureGame.WinHost.csproj", "{9A2AEFFE-BAD4-4CD6-B240-D59F25B5CB8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaileyGann.AdventureGame.WinHost", "BaileyGann.AdventureGame.WinHost\BaileyGann.AdventureGame.WinHost.csproj", "{9A2AEFFE-BAD4-4CD6-B240-D59F25B5CB8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

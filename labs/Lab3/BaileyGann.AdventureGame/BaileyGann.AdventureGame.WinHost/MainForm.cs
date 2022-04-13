@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using BaileyGann.AdventureGame.Memory;
 
 namespace BaileyGann.AdventureGame.WinHost
 {
@@ -22,22 +18,49 @@ namespace BaileyGann.AdventureGame.WinHost
 
         }
 
-                #region Menu Commands
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+
+            IEnumerable<Character> items = _characters.GetAll();
+            if(!items.Any())
+            {
+                if(MessageBox.Show(this, "Do you want to seed the database?", "Seed",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==DialogResult.Yes)
+                {
+                    _characters.Seed();
+                    UpdateUI();
+                }
+            };
+        }
+
+
+
+        #region Menu Commands
 
         private void OnCharacterAdd (object sender, EventArgs e )
         {
             var dlg = new CharacterForm();
-            if (dlg.ShowDialog(this) != DialogResult.OK)
-                return;
 
-            _character = dlg.Character;
-            UpdateUI();
+            do
+            {
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                var error = _characters.Add(dlg.Character);
+                if(String.IsNullOrEmpty(error))
+                {
+                    UpdateUI();
+                    return;
+                }
+
+                MessageBox.Show(this, error, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } while (true);
         }
 
         private void OnCharacterEdit ( object sender, EventArgs e )
         {
-            var menuItem = sender as ToolStripMenuItem;
-
             //Get selected Character
             var character = GetSelectedCharacter();
             if (character == null)
@@ -47,12 +70,21 @@ namespace BaileyGann.AdventureGame.WinHost
             var dlg = new CharacterForm();
             dlg.Character = character;
 
-            if (dlg.ShowDialog(this) != DialogResult.OK)
-                return;
+            do
+            {
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
 
-            //Update _lstCharacter
-            _character = dlg.Character;
-            UpdateUI();
+                var error = _characters.Update(character.Id, dlg.Character);
+                if(String.IsNullOrEmpty(error))
+                {
+                    UpdateUI();
+                    return;
+                };
+
+                MessageBox.Show(this, error, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } while (true);
+                      
         }
         private void OnCharacterDelete ( object sender, EventArgs e )
         {
@@ -66,7 +98,7 @@ namespace BaileyGann.AdventureGame.WinHost
                 return;
 
             //Delete
-            _character = null;
+            _characters.Delete(character.Id);
             UpdateUI();
         }
 
@@ -102,11 +134,14 @@ namespace BaileyGann.AdventureGame.WinHost
         private void UpdateUI()
         {
             _lstCharacters.Items.Clear();
-            if (_character != null)
-                _lstCharacters.Items.Add(_character);
+
+            var characters = _characters.GetAll().OrderBy(x => x.Name).ThenBy(x => x.Id);
+            
+           
+                _lstCharacters.Items.AddRange(characters.ToArray());
         }
 
-        private Character _character;
+        private readonly ICharacterRoster _characters = new MemoryCharacterRoster();
 
         #endregion
 

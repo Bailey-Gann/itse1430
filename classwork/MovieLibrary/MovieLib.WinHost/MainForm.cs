@@ -14,21 +14,47 @@ namespace MovieLib.WinHost
             InitializeComponent();
         }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
 
-        #region Movie Commands
-        //private void OnFormReset( object sender, EventArgs e)
-        //{
-        //    _movies = new MemoryMovieDatabase();
+            //If database is empty
+            IEnumerable<Movie> items = _movies.GetAll();
+            if (!items.Any())
+            {
+                if (MessageBox.Show(this, "Do you want to seed the database?", "Seed",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    //Seed database                    
+                    //SeedDatabase.Seed(_movies);
+                    _movies.Seed();
+                    UpdateUI();
+                };
+            };
+        }
 
-        //    if (MessageBox.Show(this, "Do you want to reset the database?", "Reset",
-        //           MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-        //    {
-        //        //Seed database
-        //        var seed = new SeedDatabase();
-        //        seed.Seed(_movies);
-        //        UpdateUI();
-        //    };
-        //}
+        protected override void OnFormClosing ( FormClosingEventArgs e )
+        {
+            //Confirm exit
+            DialogResult dr = MessageBox.Show(this, "Are you sure you want to quit?", "Quit",
+                                              MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr != DialogResult.Yes)
+                e.Cancel = true;
+        }
+
+        #region Command Handlers
+
+        private void OnFileExit ( object sender, EventArgs e )
+        {
+            Close();
+        }
+
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var form = new AboutBox();
+            form.ShowDialog(this);
+        }
 
         private void OnMovieAdd ( object sender, EventArgs e )
         {
@@ -60,14 +86,11 @@ namespace MovieLib.WinHost
             if (movie == null)
                 return;
 
-            //TODO: Get selected movie
             var dlg = new MovieForm();
             dlg.Movie = movie;
 
-
             do
             {
-                //Show modally - blocking call
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
 
@@ -99,47 +122,10 @@ namespace MovieLib.WinHost
             _movies.Delete(movie.Id);
             UpdateUI();
         }
+
         #endregion
 
-        #region Helper Functions
-        protected override void OnLoad ( EventArgs e )
-        {
-            base.OnLoad(e);
-
-            
-            if(!_movies.GetAll().Any())
-            {
-                if (MessageBox.Show(this, "Do you want to seed the database?", "Seed",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    //Seed database
-                    var seed = new SeedDatabase();
-                    seed.Seed(_movies);
-                    UpdateUI();
-                };
-            };
-        }
-
-        protected override void OnFormClosing ( FormClosingEventArgs e )
-        {
-            //Confirm exit
-            DialogResult dr = MessageBox.Show(this, "Are you sure you want to quit?", "Quit",
-                                              MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (dr != DialogResult.Yes)
-                e.Cancel = true;
-        }
-
-        private void OnFileExit ( object sender, EventArgs e )
-        {
-            Close();
-        }
-
-        private void OnHelpAbout ( object sender, EventArgs e )
-        {
-            var form = new AboutBox();
-            form.ShowDialog(this);
-        }
+        #region Private Members
 
         private Movie GetSelectedMovie ()
         {
@@ -150,26 +136,25 @@ namespace MovieLib.WinHost
         {
             _lstMovies.Items.Clear();
 
-            var movies = _movies.GetAll();
-            //BreakMovies(movies);
+            //Approach 1           
+            //foreach (var movie in movies)
+            // _lstMovies.Items.Add(movie);
 
-            foreach(var movie in movies)
-                _lstMovies.Items.Add(movie);
+            //Approach 2
+            //var movies = _movies.GetAll().OrderBy(x => x.Title).ThenBy(x => x.ReleaseYear);
 
+            //Approach 3
+            var movies = from m in _movies.GetAll()
+                         orderby m.Title, m.ReleaseYear
+                         select m;
+
+
+
+            _lstMovies.Items.AddRange(movies.ToArray());
         }
 
-        //private void BreakMovies ( IEnumerable<Movie> movies )
-        //{
-        //    if (movies.Any())
-        //    {
-        //        var firstMovie = movies[0];
-
-        //        ///movies[0] = new Movie();
-        //        firstMovie.Title = "Star Wars";
-        //    };
-        //}
-        #endregion
-
         private readonly IMovieDatabase _movies = new MemoryMovieDatabase();
+
+        #endregion
     }
 }

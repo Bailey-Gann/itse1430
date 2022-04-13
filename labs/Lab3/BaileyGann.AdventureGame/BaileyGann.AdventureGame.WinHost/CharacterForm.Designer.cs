@@ -178,6 +178,7 @@ namespace BaileyGann.AdventureGame.WinHost
             this._txtStrength.Name = "_txtStrength";
             this._txtStrength.Size = new System.Drawing.Size(100, 23);
             this._txtStrength.TabIndex = 4;
+            this._txtStrength.Text = "50";
             this._txtStrength.Validating += new System.ComponentModel.CancelEventHandler(this.OnAttributeCheck);
             // 
             // _txtIntelligence
@@ -186,6 +187,7 @@ namespace BaileyGann.AdventureGame.WinHost
             this._txtIntelligence.Name = "_txtIntelligence";
             this._txtIntelligence.Size = new System.Drawing.Size(100, 23);
             this._txtIntelligence.TabIndex = 5;
+            this._txtIntelligence.Text = "50";
             this._txtIntelligence.Validating += new System.ComponentModel.CancelEventHandler(this.OnAttributeCheck);
             // 
             // _txtConstitution
@@ -194,6 +196,7 @@ namespace BaileyGann.AdventureGame.WinHost
             this._txtConstitution.Name = "_txtConstitution";
             this._txtConstitution.Size = new System.Drawing.Size(100, 23);
             this._txtConstitution.TabIndex = 6;
+            this._txtConstitution.Text = "50";
             this._txtConstitution.Validating += new System.ComponentModel.CancelEventHandler(this.OnAttributeCheck);
             // 
             // _txtDexterity
@@ -202,6 +205,7 @@ namespace BaileyGann.AdventureGame.WinHost
             this._txtDexterity.Name = "_txtDexterity";
             this._txtDexterity.Size = new System.Drawing.Size(100, 23);
             this._txtDexterity.TabIndex = 7;
+            this._txtDexterity.Text = "50";
             this._txtDexterity.Validating += new System.ComponentModel.CancelEventHandler(this.OnAttributeCheck);
             // 
             // _txtCharisma
@@ -210,6 +214,7 @@ namespace BaileyGann.AdventureGame.WinHost
             this._txtCharisma.Name = "_txtCharisma";
             this._txtCharisma.Size = new System.Drawing.Size(100, 23);
             this._txtCharisma.TabIndex = 8;
+            this._txtCharisma.Text = "50";
             this._txtCharisma.Validating += new System.ComponentModel.CancelEventHandler(this.OnAttributeCheck);
             // 
             // _ddlProfession

@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BaileyGann.AdventureGame
 {
-    public class Character
+    public class Character : IValidatableObject
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string Proffesion {
-          get  { return _profession; }
-          set { _profession = value.ToUpper(); }
+            get { return _profession; }
+            set { _profession = value.ToUpper(); }
         }
         private string _profession;
         public string Race
@@ -17,11 +19,12 @@ namespace BaileyGann.AdventureGame
             set { _race = value.ToUpper(); }
         }
         private string _race;
-        public int Strength { get; set; }
-        public int Dexterity { get; set; }
-        public int Constitution { get; set; }
-        public int Intelligence { get; set; }
-        public int Charisma { get; set; }
+        public int Strength { get; set; } = 50;
+        public int Dexterity { get; set; } = 50;
+        public int Constitution { get; set; } = 50;
+        public int Intelligence { get; set; } = 50;
+        public int Charisma { get; set; } = 50;
+        public int Id {get; set; }
         
 
 
@@ -78,17 +81,64 @@ namespace BaileyGann.AdventureGame
 
         public override string ToString ()
         {
-            return Name;
+            return $"{Name}, {Id}";
+        }
+
+        public Character Copy ()
+        {
+            return new Character() {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Proffesion = Proffesion,
+                Race = Race,
+                Strength = Strength,
+                Dexterity = Dexterity,
+                Constitution = Constitution,
+                Intelligence = Intelligence,
+                Charisma = Charisma,
+            };
+        }
+
+        public void CopyFrom( Character source )
+        {
+            Name = source.Name;
+            Description = source.Description;
+            Race = source.Race;
+            Proffesion = source.Proffesion;
+            Description = source.Description;
+            Strength = source.Strength;
+            Dexterity = source.Dexterity;
+            Intelligence = source.Intelligence;
+            Charisma = source.Charisma;
+            Constitution = source.Constitution;
+        }
+
+        public IEnumerable<ValidationResult> Validate (ValidationContext validationContext)
+        {
+            if (String.IsNullOrEmpty(Name))
+                yield return new ValidationResult("Name is required", new[] { nameof(Name) });
+            if (String.IsNullOrEmpty(Race))
+                yield return new ValidationResult("Race is required", new[] { nameof(Race) });
+            if(String.IsNullOrEmpty(Proffesion))
+                yield return new ValidationResult("Profession is required", new[] { nameof(Proffesion) });
+
+            if (Strength > 100 || Strength < 1)
+                yield return new ValidationResult("Attributes must be less than 101 and greater than 0", new[] { nameof(Strength) });
+
+            if (Dexterity > 100 || Dexterity < 1)
+                yield return new ValidationResult("Attributes must be less than 101 and greater than 0", new[] { nameof(Dexterity) });
+
+            if (Constitution > 100 || Constitution < 1)
+                yield return new ValidationResult("Attributes must be less than 101 and greater than 0", new[] { nameof(Constitution) });
+
+            if (Intelligence > 100 || Intelligence < 1)
+                yield return new ValidationResult("Attributes must be less than 101 and greater than 0", new[] { nameof(Intelligence) });
+
+            if (Charisma > 100 || Charisma < 1)
+                yield return new ValidationResult("Attributes must be less than 101 and greater than 0", new[] { nameof(Charisma) });
         }
     }
-     //Story_1 : Complete
-     //Story_2
-     //Story_3
-     //Story_4
-     //Story_5
-     //Story_6
-     //Story_7
-     //Story_8
-     //Story_9
+     
 
 }

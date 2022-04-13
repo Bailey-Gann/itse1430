@@ -45,26 +45,24 @@ namespace BaileyGann.AdventureGame.WinHost
             character.Name = _txtName.Text;
             character.Proffesion = _ddlProfession.Text;
             character.Race = _ddlRace.Text;
-            character.Strength = ReadAsInt32(_txtStrength, 50);
-            character.Intelligence = ReadAsInt32(_txtIntelligence, 50);
-            character.Constitution = ReadAsInt32(_txtConstitution, 50);
-            character.Dexterity = ReadAsInt32(_txtDexterity, 50);
-            character.Charisma = ReadAsInt32(_txtCharisma, 50);
+            character.Strength = ReadAsInt32(_txtStrength, -1);
+            character.Intelligence = ReadAsInt32(_txtIntelligence, -1);
+            character.Constitution = ReadAsInt32(_txtConstitution, -1);
+            character.Dexterity = ReadAsInt32(_txtDexterity, -1);
+            character.Charisma = ReadAsInt32(_txtCharisma, -1);
             character.Description = _txtDescription.Text;
 
             //Validate : Check
-            var error = character.Validate();
-            if(String.IsNullOrEmpty(error))
+           if(ObjectValidator.TryValidateObject(character, out var errors))
             {
-                //Validate : Confirmed
                 Character = character;
                 DialogResult = DialogResult.OK;
                 Close();
                 return;
-            }
+            };
 
             //Display Error
-            MessageBox.Show(this, error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, "Movie is invalid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void OnCancel ( object sender, EventArgs e )
