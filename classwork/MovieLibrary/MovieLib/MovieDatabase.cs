@@ -6,6 +6,7 @@ namespace MovieLib
     /// <summary>Provides a base implementation of <see cref="IMovieDatabase"/>.</summary>
     public abstract class MovieDatabase : IMovieDatabase
     {
+        #region Add
         /// <summary>Adds a movie to the database.</summary>
         /// <param name="movie">The movie to add.</param>
         /// <returns>The error message, if any.</returns>
@@ -15,15 +16,21 @@ namespace MovieLib
         /// <paramref name="movie"/> is not valid.
         /// A movie with the same title already exists.
         /// </remarks>
-        public string Add ( Movie movie )
+        public Movie Add ( Movie movie )
         {
-            //TODO: Validate
-            if (movie == null)
-                return "Movie cannot be null";
+            //Raise an error using throw
+            //   throw-statement ::= throw E(exception)
 
-            //TODO: Fix validation message
-            if (!ObjectValidator.TryValidateObject(movie, out var errors))
-                return "Movie is invalid";
+            // Validate
+            if (movie == null)
+                throw new ArgumentNullException(nameof(movie));
+            //movie = movie ?? throw new ArgumentNullException(nameof(movie));
+            //return "Movie cannot be null";
+
+            //Throw ValidationException if anything wrong
+            ObjectValidator.ValidateObject(movie);
+            //if (!ObjectValidator.TryValidateObject(movie, out var errors))
+            //    return "Movie is invalid";
             //var error = movie.Validate();
             //if (!String.IsNullOrEmpty(error))
             //    return "Movie is invalid";
@@ -31,34 +38,39 @@ namespace MovieLib
             //Title must be unique
             var existing = FindByName(movie.Title);
             if (existing != null)
-                return "Movie must be unique";
+                //return "Movie must be unique";
+                //throw new InvalidOperationException("Movie must be unique");
+                throw new ArgumentException("Movie must be unique", nameof(movie));
 
             //Add
             var newMovie = AddCore(movie);
-            movie.Id = newMovie.Id;
-            return "";
+            //movie.Id = newMovie.Id;
+            //return "";
+            return newMovie;
         }
 
         /// <summary>Adds a movie to the database.</summary>
         /// <param name="movie">The movie to add.</param>
         /// <returns>The added movie.</returns>
         protected abstract Movie AddCore ( Movie movie );
+        #endregion
 
+        #region Delete
         /// <summary>Deletes a movie.</summary>
         /// <param name="id">The ID of the movie to delete.</param>
-        public string Delete ( int id )
+        public void Delete ( int id )
         {
-            if (id <= 0)
-                return "ID must be > 0";
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
-            DeleteCore(id);
-            return "";
+            DeleteCore(id);       
         }
 
         /// <summary>Deletes a movie.</summary>
         /// <param name="id">The ID of the movie to delete.</param>
         protected abstract void DeleteCore ( int id );
+        #endregion
 
+        #region Get/GetAll
         /// <summary>Gets a movie.</summary>
         /// <param name="id">The ID of the movie to get.</param>
         /// <returns>The movie, if found.</returns>
@@ -66,7 +78,7 @@ namespace MovieLib
         {
             //TODO: Validate
             if (id <= 0)
-                return null;
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
             return GetCore(id);
         }
@@ -78,16 +90,14 @@ namespace MovieLib
 
         /// <summary>Gets all the movies.</summary>
         /// <returns>The movies in the database.</returns>
-        public IEnumerable<Movie> GetAll ()
-        {
-            //TODO: Handle null
-            return GetAllCore();
-        }
+        public IEnumerable<Movie> GetAll () => GetAllCore();
 
         /// <summary>Gets all the movies.</summary>
         /// <returns>The movies in the database.</returns>
         protected abstract IEnumerable<Movie> GetAllCore ();
+        #endregion
 
+        #region Update
         /// <summary>Updates an existing movie in the database.</summary>
         /// <param name="id">The ID of the movie to update.</param>
         /// <param name="movie">The updated movie.</param>
@@ -100,39 +110,40 @@ namespace MovieLib
         /// A movie with the same title already exists.
         /// The movie cannot be found.
         /// </remarks>
-        public string Update ( int id, Movie movie )
+        public void Update ( int id, Movie movie )
         {
             //TODO: Validate
             if (id <= 0)
-                return "Id must be greater than or equal to 0";
-            if (movie == null)
-                return "Movie cannot be null";
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
-            if (!ObjectValidator.TryValidateObject(movie, out var errors))
-                return "Movie is invalid";
-            //var error = movie.Validate();
-            //if (!String.IsNullOrEmpty(error))
-            //  return error;
+            if (movie == null)
+                //return "Movie cannot be null";
+                throw new ArgumentNullException(nameof(movie));
+
+            ObjectValidator.ValidateObject(movie);
 
             //Title must be unique or same movie
             var existing = FindByName(movie.Title);
             if (existing != null && existing.Id != id)
-                return "Movie must be unique";
+                //return "Movie must be unique";
+                throw new ArgumentException("Movie must be unique", nameof(movie));
 
             //Make sure movie already exists
             existing = GetCore(id);
             if (existing == null)
-                return "Movie does not exist";
+                //return "Movie does not exist";
+                throw new ArgumentException("Movie does not exist", nameof(movie));
+
 
             //Update            
-            UpdateCore(id, movie);
-            return "";
+            UpdateCore(id, movie);            
         }
 
         /// <summary>Updates a movie.</summary>
         /// <param name="id">The ID of the movie to update.</param>
         /// <param name="movie">The movie details.</param>
         protected abstract void UpdateCore ( int id, Movie movie );
+        #endregion
 
         /// <summary>Finds a movie by name.</summary>
         /// <param name="name">The movie name.</param>
