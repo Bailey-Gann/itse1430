@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Forms;
+
 
 using MovieLib.Memory;
 
@@ -74,11 +76,24 @@ namespace MovieLib.WinHost
                 //    UpdateUI();
                 //    return;
                 //};
-                _movies.Add(dlg.Movie);
-                UpdateUI();
-                return;
+                try
+                {
+                    _movies.Add(dlg.Movie);
+                    UpdateUI();
+                    return;
+                } catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(this, "Please enter a unique movie name.", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (ValidationException ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
 
-                //MessageBox.Show(this, error, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
             } while (true);
         }
 
@@ -97,10 +112,15 @@ namespace MovieLib.WinHost
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                //TODO: Update movie
-                _movies.Update(movie.Id, dlg.Movie);
-                UpdateUI();
-                return;
+                try
+                {
+                    _movies.Update(movie.Id, dlg.Movie);
+                    UpdateUI();
+                    return;
+                } catch(Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 
 
                 //MessageBox.Show(this, error, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -119,9 +139,14 @@ namespace MovieLib.WinHost
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            //TODO: Delete
-            _movies.Delete(movie.Id);
-            UpdateUI();
+            try
+            {
+                _movies.Delete(movie.Id);
+                UpdateUI();
+            } catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion
