@@ -46,6 +46,7 @@ namespace MovieLib
             try
             {
                 var newMovie = AddCore(movie);
+                return newMovie;
             } catch (InvalidOperationException e)
             {
                 //Pass through
@@ -59,7 +60,7 @@ namespace MovieLib
             
             //movie.Id = newMovie.Id;
             //return "";
-            return newMovie;
+            
         }
 
         /// <summary>Adds a movie to the database.</summary>

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Forms;
 
-
 using MovieLib.Memory;
 
 namespace MovieLib.WinHost
@@ -28,11 +27,11 @@ namespace MovieLib.WinHost
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     //Seed database                    
-                    //SeedDatabase.Seed(_movies);
                     _movies.Seed();
-                    UpdateUI();
                 };
             };
+
+            UpdateUI();
         }
 
         protected override void OnFormClosing ( FormClosingEventArgs e )
@@ -62,13 +61,11 @@ namespace MovieLib.WinHost
         {
             var dlg = new MovieForm();
 
-            //Show modally - blocking call
             do
             {
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                //TODO: Save movie
                 //var error = _movies.Add(dlg.Movie);
                 //if (String.IsNullOrEmpty(error))
                 //{
@@ -86,14 +83,12 @@ namespace MovieLib.WinHost
                     MessageBox.Show(this, "Please enter a unique movie name.", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } catch (ValidationException ex)
                 {
-                    MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var msg = ex.ValidationResult.ErrorMessage;
+                    MessageBox.Show(this, msg, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } catch (Exception ex)
                 {
                     MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 };
-
-
-
             } while (true);
         }
 
@@ -117,13 +112,10 @@ namespace MovieLib.WinHost
                     _movies.Update(movie.Id, dlg.Movie);
                     UpdateUI();
                     return;
-                } catch(Exception ex)
+                } catch (Exception ex)
                 {
                     MessageBox.Show(this, ex.Message, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                
-
-                //MessageBox.Show(this, error, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
             } while (true);
         }
 
@@ -139,6 +131,7 @@ namespace MovieLib.WinHost
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
+            //TODO: Delete
             try
             {
                 _movies.Delete(movie.Id);
@@ -146,8 +139,10 @@ namespace MovieLib.WinHost
             } catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            };
         }
+
+        private void Foo () => throw new NotImplementedException();
 
         #endregion
 
@@ -162,24 +157,24 @@ namespace MovieLib.WinHost
         {
             _lstMovies.Items.Clear();
 
-            //Approach 1           
+            //Approach 1
             //foreach (var movie in movies)
-            // _lstMovies.Items.Add(movie);
+            //    _lstMovies.Items.Add(movie);
 
             //Approach 2
-            //var movies = _movies.GetAll().OrderBy(x => x.Title).ThenBy(x => x.ReleaseYear);
+            //var movies = _movies.GetAll()
+            //                    .OrderBy(x => x.Title)
+            //                    .ThenBy(x => x.ReleaseYear);
 
             //Approach 3
             var movies = from m in _movies.GetAll()
                          orderby m.ReleaseYear, m.Title
                          select m;
 
-
-
             _lstMovies.Items.AddRange(movies.ToArray());
         }
 
-        private readonly IMovieDatabase _movies = new MemoryMovieDatabase();
+        private readonly IMovieDatabase _movies = new IO.FileMovieDatabase("movies.txt");
 
         #endregion
     }

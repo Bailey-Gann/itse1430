@@ -19,7 +19,7 @@ namespace MovieLib
 
             database.Add(new Movie {
                 Title = "The Rise of Danzu",
-                Genre = "Horror, Action",
+                Genre = "Horror",
                 ReleaseYear = 2019,
                 Duration = 145,
                 Rating = "R",
@@ -28,7 +28,7 @@ namespace MovieLib
 
             database.Add(new Movie {
                 Title = "Where Dragons Fly...",
-                Genre = "Action, Adventure",
+                Genre = "Adventure",
                 ReleaseYear = 2020,
                 Duration = 139,
                 Rating = "PG",
@@ -37,7 +37,7 @@ namespace MovieLib
 
             database.Add(new Movie {
                 Title = "Danzu versus the Lycan",
-                Genre = "Action, Horror",
+                Genre = "Action",
                 ReleaseYear = 2021,
                 Duration = 157,
                 Rating = "PG-13",
