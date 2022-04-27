@@ -9,7 +9,21 @@
     <Authors>Bailey Gann</Authors>
   </PropertyGroup>
 
+
+
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieLib.Sql\MovieLib.Sql.csproj" />
     <ProjectReference Include="..\MovieLib\MovieLib.csproj" />
   </ItemGroup>
 

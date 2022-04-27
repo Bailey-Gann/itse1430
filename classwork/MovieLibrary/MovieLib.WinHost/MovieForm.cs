@@ -42,6 +42,8 @@ namespace MovieLib.WinHost
             if (Int32.TryParse(control.Text, out var result))
                 return result;
 
+            
+
             return defaultValue;
         }
 
