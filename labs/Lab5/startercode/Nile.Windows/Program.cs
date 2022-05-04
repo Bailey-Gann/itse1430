@@ -22,6 +22,7 @@ namespace Nile.Windows
             Application.Run(new MainForm());
         }
 
+        public static string GetConnectionString ( string name ) => Configuration.GetConnectionString(name);
         public static IConfiguration Configuration { get; private set; }
     }
 }

@@ -90,6 +90,15 @@ namespace Nile.Stores
             return null;
         }
 
+        protected override Product FindByName ( string name )
+        {
+            foreach (var product in _products)
+                if (String.Equals(product.Name, name, StringComparison.CurrentCultureIgnoreCase))
+                    return product;
+
+            return null;
+        }
+
         private List<Product> _products = new List<Product>();
         private int _nextId = 1;
     }

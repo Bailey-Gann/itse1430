@@ -1,8 +1,12 @@
 /*
+ * Bailey Gann
  * ITSE 1430
+ * Spring 2022
  */
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace Nile.Windows
@@ -36,13 +40,33 @@ namespace Nile.Windows
         private void OnProductAdd( object sender, EventArgs e )
         {
             var child = new ProductDetailForm("Product Details");
-            if (child.ShowDialog(this) != DialogResult.OK)
-                return;
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
 
-            //TODO: Handle errors
-            //Save product
-            _database.Add(child.Product);
-            UpdateList();
+                try
+                {
+                    //Save product
+                    _database.Add(child.Product);
+                    UpdateList();
+                    return;
+                } catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(this, "Please enter a unique product name.", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (ValidationException ex)
+                {
+                    var msg = ex.ValidationResult.ErrorMessage;
+                    MessageBox.Show(this, msg, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+            } while (true);
+
+            
+            
+            
         }
 
         private void OnProductEdit( object sender, EventArgs e )
@@ -94,6 +118,12 @@ namespace Nile.Windows
             e.SuppressKeyPress = true;
         }
 
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var form = new AboutBox();
+            form.ShowDialog(this);
+        }
+
         #endregion
 
         #region Private Members
@@ -105,7 +135,15 @@ namespace Nile.Windows
                                 "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            //TODO: Handle errors
+            try
+            {
+                _bsProducts.Remove(product.Id);
+                UpdateList();
+            } catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             //Delete product
             _database.Remove(product.Id);
             UpdateList();
@@ -115,13 +153,22 @@ namespace Nile.Windows
         {
             var child = new ProductDetailForm("Product Details");
             child.Product = product;
-            if (child.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            //TODO: Handle errors
-            //Save product
-            _database.Update(child.Product);
-            UpdateList();
+                        
+           
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
+                try
+                {
+                    //Save product
+                    _database.Update(child.Product);
+                    UpdateList();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+            } while (true);
         }
 
         private Product GetSelectedProduct ()
@@ -134,15 +181,14 @@ namespace Nile.Windows
 
         private void UpdateList ()
         {
-            //TODO: Handle errors
-
+            //TODO: Handle Errors
             _bsProducts.DataSource = _database.GetAll();
         }
 
         private string GetConnectionString ( string name )
                 => Program.Configuration.GetConnectionString(name);        
 
-        private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
+        private readonly IProductDatabase _database = new Nile.Stores.Sql(Program.GetConnectionString("ProductDatabase"));
         #endregion
     }
 }

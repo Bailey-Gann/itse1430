@@ -3,6 +3,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <Authors>Bailey Gann</Authors>
+    <Company>TCC Student</Company>
+    <Product>Lab 5</Product>
+    <Description>Bailey Gann
+ITSE-1430
+Spring 2022</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nile.Stores\Nile.Stores.csproj" />
+    <ProjectReference Include="..\NileDatabase\NileDatabase.sqlproj" />
     <ProjectReference Include="..\Nile\Nile.csproj" />
 
   </ItemGroup>

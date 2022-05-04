@@ -3,6 +3,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace Nile.Stores
 {
@@ -14,36 +17,51 @@ namespace Nile.Stores
         /// <returns>The added product.</returns>
         public Product Add ( Product product )
         {
-            //TODO: Check arguments
+            
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
 
-            //TODO: Validate product
+            ObjectValidator.ValidateObject(product);
+
+            var existing = FindByName(product.Name);
+            if (existing != null)
+                throw new InvalidOperationException("Product must be unique");
 
             //Emulate database by storing copy
-            return AddCore(product);
+            try
+            {
+                var newProduct = AddCore(product);
+                return newProduct;
+            } catch( InvalidOperationException e)
+            {
+                throw;
+            } catch(Exception e)
+            {
+                throw new Exception("Error adding movie");
+            };
         }
 
         /// <summary>Get a specific product.</summary>
         /// <returns>The product, if it exists.</returns>
         public Product Get ( int id )
         {
-            //TODO: Check arguments
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
             return GetCore(id);
         }
-        
+
         /// <summary>Gets all products.</summary>
         /// <returns>The products.</returns>
-        public IEnumerable<Product> GetAll ()
-        {
-            return GetAllCore();
-        }
+        public IEnumerable<Product> GetAll () => GetAllCore();
+       
         
         /// <summary>Removes the product.</summary>
         /// <param name="id">The product to remove.</param>
         public void Remove ( int id )
         {
-            //TODO: Check arguments
-
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
+                 
             RemoveCore(id);
         }
         
@@ -52,12 +70,23 @@ namespace Nile.Stores
         /// <returns>The updated product.</returns>
         public Product Update ( Product product )
         {
-            //TODO: Check arguments
+            
+            if (product.Id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(product.Id), "Id must be > 0");
+            if (product.Name == null)
+                throw new ArgumentNullException(nameof(product.Name));
+            
 
-            //TODO: Validate product
+            ObjectValidator.ValidateObject(product);
+
+            var existing = FindByName(product.Name);
+            if (existing != null && existing.Id != product.Id)
+                throw new ArgumentException("Product must be unique", nameof(product));
 
             //Get existing product
-            var existing = GetCore(product.Id);
+            existing = GetCore(product.Id);
+            if (existing == null)
+                throw new ArgumentException("Product does not exist", nameof(product));
 
             return UpdateCore(existing, product);
         }
@@ -73,6 +102,8 @@ namespace Nile.Stores
         protected abstract Product UpdateCore( Product existing, Product newItem );
 
         protected abstract Product AddCore( Product product );
+        protected abstract Product FindByName ( string name );
+        
         #endregion
     }
 }
