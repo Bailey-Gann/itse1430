@@ -33,26 +33,7 @@ namespace Nile.Stores
         }
 
 
-        protected override Product FindByName ( string name )
-        {
-            using (var conn = OpenConnection())
-            {
-                var cmd = new SqlCommand("FindByName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@name", name);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        return LoadProduct(reader);
-                    };
-                };
-            };
-
-            return null;
-        }
+       
         protected override IEnumerable<Product> GetAllCore ()
         {
             DataSet ds = new DataSet();
@@ -148,5 +129,7 @@ namespace Nile.Stores
 
             return conn;
         }
+
+        protected override object FindByName ( string name ) => throw new NotImplementedException();
     }
 }

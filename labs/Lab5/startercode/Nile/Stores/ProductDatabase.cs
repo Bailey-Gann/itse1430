@@ -41,6 +41,8 @@ namespace Nile.Stores
             };
         }
 
+        protected abstract object FindByName ( string name );
+
         /// <summary>Get a specific product.</summary>
         /// <returns>The product, if it exists.</returns>
         public Product Get ( int id )
@@ -102,7 +104,8 @@ namespace Nile.Stores
         protected abstract Product UpdateCore( Product existing, Product newItem );
 
         protected abstract Product AddCore( Product product );
-        protected abstract Product FindByName ( string name );
+       
+
         
         #endregion
     }
